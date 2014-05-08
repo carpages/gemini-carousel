@@ -1,0 +1,242 @@
+/*------------------------------------*\
+    $CAROUSEL
+\*------------------------------------*/
+/**
+  * @module Carousel [.carousel]
+  * @description A lightweight Carousel mainly powered by CSS/CSS3. * Requires JS plugin. http://codepen.io/mattdrose/pen/ufgJd
+  */
+/**
+  * @submodule Carousel List [.carousel__list]
+  * @description The list of items that you want to scroll through
+  *
+  * @modifier [.carousel__list--$n] N is the number of elements you want to show per page
+  */
+/**
+  * @example
+  *
+  * @markup
+  <div class="carousel">
+    <ul class="carousel__list carousel__list--4">
+      <li>
+        <img src="http://www.placecage.com/300/150/" />
+      </li>
+      <li>
+        <img src="http://www.placecage.com/300/150/" />
+      </li>
+      <li>
+        <img src="http://www.placecage.com/300/150/" />
+      </li>
+      <li>
+        <img src="http://www.placecage.com/300/150/" />
+      </li>
+      <li>
+        <img src="http://www.placecage.com/300/150/" />
+      </li>
+      <li>
+        <img src="http://www.placecage.com/300/150/" />
+      </li>
+      <li>
+        <img src="http://www.placecage.com/300/150/" />
+      </li>
+      <li>
+        <img src="http://www.placecage.com/300/150/" />
+      </li>
+    </ul>
+  </div>
+  */
+
+.carousel{
+  position:relative;
+}
+
+$maxItems: 40;
+
+.carousel__list{
+  @extend %gpu;
+  @extend .clearfix;
+  @extend .list--no-style;
+  position:relative;
+  margin:0;
+  white-space:nowrap;
+  overflow:hidden;
+  //height:100%;
+
+  > li{
+    width: 100%;
+    display:inline-block;
+    vertical-align:top;
+  }
+
+  img{
+    width:100%;
+  }
+}
+
+@for $display from 2 through 5{
+
+  .carousel__list--#{$display} > li{
+    @include quick-media-query(medium){
+      width: 100% * 0.5;
+    }
+    @include quick-media-query(large){
+      width: 100% / $display;
+    }
+  }
+}
+
+.carousel__nav{
+  &, a{
+    color:$grey;
+  }
+  a{
+    font-weight:bold;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}
+$carousel-button-size: 30px;
+.carousel__previous, .carousel__next{
+  @extend %icon;
+  position:absolute;
+  top:50%;
+  color:#fff;
+  background:$black;
+  background:rgba($darkest-grey, 0.8);
+  cursor:pointer;
+  z-index:2;
+
+  &:before{
+    position:absolute;
+    left:0;top:0;
+    width:100%;text-align:center;
+  }
+}
+
+  .carousel__buttons--small{
+    .carousel__previous, .carousel__next{
+      @extend .circle;
+      margin-top:-$carousel-button-size;
+      width:$carousel-button-size;height:$carousel-button-size;
+
+      &:before{
+        line-height:$carousel-button-size;
+        font-size:$carousel-button-size/2;
+      }
+    }
+    .carousel__previous{
+      left:-$carousel-button-size/2;
+      @extend .icon--arrow-left-2;
+    }
+    .carousel__next{
+      right:-$carousel-button-size/2;
+      @extend .icon--arrow-right-2;
+    }
+  }
+  .carousel__buttons--medium{
+    .carousel__previous, .carousel__next{
+      margin-top:-$carousel-button-size*1.5;
+      width:$carousel-button-size*1.5;height:$carousel-button-size*3;
+
+      &:before{
+        line-height:$carousel-button-size*3;
+        font-size:$carousel-button-size*0.75;
+      }
+    }
+    .carousel__previous{
+      left:0;
+      @extend .icon--arrow-left-2;
+    }
+    .carousel__next{
+      right:0;
+      @extend .icon--arrow-right-2;
+    }
+  }
+
+
+  // THE CAROUSEL ON THE LISTING PAGE
+  .carousel--listing{
+    position:relative;
+
+    .carousel__buttons{
+      position:absolute;
+      left:0;top:0;
+      width:100%;
+      height:100%;
+    }
+
+    .carousel__nav{
+      @extend .list--no-style;
+      @extend .clearfix;
+      overflow:hidden;
+
+      >li{
+        width:28%;
+        padding:$quarter-spacing-unit;
+      }
+    }
+    @include quick-media-query(hidden-large){
+      /*ul*/.carousel__nav{
+        overflow-x:scroll;
+        white-space:nowrap;
+
+        > li{
+          display:inline-block;
+        }
+
+        img {
+          opacity:0.5;
+          @include transition(opacity 0.5s ease);
+        }
+        .is-active img{
+          opacity:1;
+        }
+
+        /*&:after{
+          content:'';
+          display:block;
+          position:absolute;
+          right:0;bottom:0;
+          height:160px;
+          width:50px;
+          background:$white;
+          background:rgba($white,0);
+          @include background-image(linear-gradient(left, rgba($white,0), $white));
+        }*/
+
+      }
+    }
+
+    @include quick-media-query(large,true){
+      position:relative;
+      .carousel__list{
+        width:60%;
+      }
+      /*ul*/.carousel__nav{
+        overflow-y:scroll;
+        position:absolute;
+        right:0; top:0;
+        width:33.333%;
+        height:100%;
+        overflow-y:scroll;
+        padding-bottom:30px;
+
+        > li{
+          width:33.33%;
+          float:left;
+          padding:$quarter-spacing-unit;
+        }
+
+        /*a > img{
+          border:4px solid transparent;
+          @include transition(border 0.25s ease);
+        }
+        a.is-active > img{
+          border:4px solid $brand-color;
+        }*/
+      }
+      .carousel__buttons{
+        width:60%;
+      }
+    }
+  }
