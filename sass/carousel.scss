@@ -1,0 +1,40 @@
+/*------------------------------------*\
+    $CAROUSEL
+\*------------------------------------*/
+
+.carousel{
+  position:relative;
+}
+
+.carousel__list{
+  @extend %gpu;
+  @extend .clearfix;
+  @extend .list--no-style;
+  position:relative;
+  margin:0;
+  white-space:nowrap;
+  overflow:hidden;
+
+  > li{
+    width: 100%;
+    display:inline-block;
+    vertical-align:top;
+  }
+
+  img{
+    width:100%;
+  }
+}
+
+@for $display from 2 through 5{
+
+  .carousel__list--#{$display} > li{
+    @include quick-media-query(medium){
+      width: 100% * 0.5;
+    }
+    @include quick-media-query(large){
+      width: 100% / $display;
+    }
+  }
+
+}
