@@ -6,7 +6,7 @@
   "dependencies": {
     "jquery-boiler": "0.1.x",
     "underscore": "1.6.x",
-    "jquery-fold": "ssh://git@stash.carpages.ca/gem/jquery-fold.git#1",
-    "jquery-respond": "ssh://git@stash.carpages.ca/gem/jquery-respond.git#1"
+    "jquery-fold": "ssh://git@stash.carpages.ca/gem/jquery-fold.git",
+    "jquery-respond": "ssh://git@stash.carpages.ca/gem/jquery-respond.git"
   }
 }
