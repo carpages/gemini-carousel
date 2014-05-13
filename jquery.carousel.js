@@ -14,7 +14,8 @@ define([
       indexList: 0,
       pagination: false,
       paginationClass: 'pagination--bullets',
-      loop: false
+      loop: false,
+      templates: {}
     },
 
     events: {
@@ -23,6 +24,9 @@ define([
 
     init: function(){
       var P = this;
+
+      //Extend the templates
+      P.T = $.extend(T, plugin.settings.templates);
 
       // Init variables
       P.currentItem = P.currentPage = 1;
@@ -73,7 +77,7 @@ define([
       var P = this;
 
       //Template
-      P.pagination = T.nav({
+      P.pagination = P.T.nav({
         // This bugs out ie8... super weird
         // Issue with using "class"
         // http://www.ecma-international.org/ecma-262/5.1/#sec-7.6.1.1
