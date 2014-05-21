@@ -1,7 +1,7 @@
 define([
     'jquery.boiler',
     'underscore',
-    'modules/carousel/templates',
+    'jquery.carousel.templates',
     'jquery.fold',
     'jquery.respond'
   ], function($, _, T){
