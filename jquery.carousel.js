@@ -26,7 +26,7 @@ define([
       var P = this;
 
       //Extend the templates
-      P.T = $.extend(T, plugin.settings.templates);
+      P.T = $.extend(T, P.settings.templates);
 
       // Init variables
       P.currentItem = P.currentPage = 1;
