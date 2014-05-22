@@ -266,11 +266,18 @@ define([
       if(item > P.itemCount) return;
 
       //Calculate the x offset in pixels
-      var $item = P.$carouselList.children('li:nth-child('+item+')');
-      var xOffset = $item.offset().left - P.$carouselList.offset().left + P.carouselList.scrollLeft;
+      var $item = P.$carouselList.children('li:nth-child('+item+')'),
+          xOffset = $item.offset().left -
+                    P.$carouselList.offset().left +
+                    P.carouselList.scrollLeft;
 
       //Whether there are more items to scroll to
-      var isMoreItems = $.rightoffold(P.$carouselList.find('li').last(),{container:P.$carouselList, threshold:-P.itemWidth-20});
+      var isMoreItems = $.rightoffold(
+        P.$carouselList.find('li').last(),{
+          container:P.$carouselList,
+          threshold:-P.itemWidth-20
+        }
+      );
 
       //Make sure there's something to scroll to
       if ((item > P.currentItem && !isMoreItems) || xOffset < 0) return;
@@ -347,8 +354,10 @@ define([
               var dragOffset = -ev.gesture.deltaX;
 
               // slow down at the first and last pane
-              if((P.currentPage == 1 && ev.gesture.direction == "right") ||
-                (P.currentPage == P.pageCount && ev.gesture.direction == "left")) {
+              if(
+                (P.currentPage == 1 && ev.gesture.direction == "right") ||
+                (P.currentPage == P.pageCount && ev.gesture.direction == "left")
+              ) {
                 dragOffset *= 0.4;
               }
 
