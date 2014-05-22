@@ -139,7 +139,7 @@ define([
       });
 
       // Touch Support
-      if(CP.Support.touch) {
+      if(GEM.Support.touch) {
         P._initTouch();
       }
 
@@ -316,7 +316,7 @@ define([
     _initTouch: function(){
       var P = this;
 
-      require(['cp.touch'], function(){
+      require(['gemini.touch'], function(){
 
         //Add touch events
         P.$carouselList.hammer({
