@@ -1,10 +1,19 @@
 /**
- * @fileoverview A jQuery plugin to build dynamic carousel's. The plugin works
+ * @fileoverview
+
+A jQuery plugin to build dynamic carousel's. The plugin works
 mostly with CSS, meaning the markup is quite manipulatable.
 
-NOTE: You can add custom navigation buttons within the carousel using the
-data-goto attribute. To quickly add some automatically, set pagination to true.
-See example.
+### Notes
+- Requires an include to ``carousel.scss`` in your Gemini build
+
+### Features
+- You can set the number of items per page in the markup's list. This is set
+using the CSS extension ``carousel__list--{number}``.
+- You can add custom navigation buttons within the carousel using the
+``data-goto`` attribute. The value set will take you to the corresponding page.
+You can see this in the example
+
  *
  * @namespace jquery.carousel
  * @copyright Carpages.ca 2014
@@ -14,6 +23,8 @@ See example.
  * @requires jquery.boiler
  * @requires jquery.fold
  * @requires jquery.respond
+ * @requires gemini
+ * @requires gemini.touch
 
  * @prop {boolean} pagination {@link jquery.carousel#pagination}
  * @prop {boolean} loop {@link jquery.carousel#loop}
