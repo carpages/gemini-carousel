@@ -4,8 +4,9 @@
     {"name": "Matt Rose", "email": "matt@mattrose.ca"}
   ],
   "dependencies": {
-    "jquery-boiler": "0.1.x",
-    "underscore": "1.6.x",
+    "underscore": "~1.6",
+    "jquery-loader": "ssh://git@stash.carpages.ca/gem/jquery-loader.git",
+    "jquery-boiler": "~0.1",
     "jquery-fold": "ssh://git@stash.carpages.ca/gem/jquery-fold.git",
     "jquery-respond": "ssh://git@stash.carpages.ca/gem/jquery-respond.git"
   }

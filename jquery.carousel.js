@@ -43,9 +43,10 @@ See example.
  */
 
 define([
-    'jquery.boiler',
+    'jquery-loader',
     'underscore',
     'jquery.carousel.templates',
+    'jquery.boiler',
     'jquery.fold',
     'jquery.respond'
   ], function($, _, T){
