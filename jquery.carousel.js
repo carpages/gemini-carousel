@@ -1,3 +1,47 @@
+/**
+ * @fileoverview A jQuery plugin to build dynamic carousel's. The plugin works
+mostly with CSS, meaning the markup is quite manipulatable.
+
+NOTE: You can add custom navigation buttons within the carousel using the
+data-goto attribute. To quickly add some automatically, set pagination to true.
+See example.
+ *
+ * @namespace jquery.carousel
+ * @copyright Carpages.ca 2014
+ * @author Matt Rose <matt@mattrose.ca>
+
+ * @requires jquery
+ * @requires jquery.boiler
+ * @requires jquery.fold
+ * @requires jquery.respond
+
+ * @prop {boolean} pagination {@link jquery.carousel#pagination}
+ * @prop {boolean} loop {@link jquery.carousel#loop}
+ * @prop {string} container {@link jquery.carousel#container}
+ * @prop {integer} indexList {@link jquery.carousel#indexList}
+ * @prop {integer} scrollEventDelay {@link jquery.carousel#scrollEventDelay}
+ * @prop {object} templates {@link jquery.carousel#templates}
+
+ * @example
+  <html>
+    <div id="js-carousel-example" class="carousel">
+      <ul class="carousel__list carousel__list--3">
+        <li>Content for item 1</li>
+        <li>Content for item 2</li>
+        <li>Content for item 3</li>
+        <li>Content for item 4</li>
+      </ul>
+      <!-- Can be added automatically using the pagination setting -->
+      <button class="button" data-goto="--">Previous Page</button>
+      <button class="button" data-goto="2">Page 2</button>
+      <button class="button" data-goto="++">Next Page</button>
+    </div>
+  </html>
+
+ * @example
+  $('#js-carousel-example').carousel();
+ */
+
 define([
     'jquery.boiler',
     'underscore',
@@ -9,19 +53,64 @@ define([
   $.boiler('carousel', {
 
     defaults: {
-      scrollEventDelay: 0,
-      container: false,
-      indexList: 0,
+      /**
+       * Whether to append pagination to the the carousel.
+       * @name jquery.carousel#pagination
+       * @type Boolean
+       * @default false
+       */
       pagination: false,
-      paginationClass: 'pagination--bullets',
+
+      /**
+       * Whether you want the carousel to loop.
+       * @name jquery.carousel#loop
+       * @type Boolean
+       * @default false
+       */
       loop: false,
+
+      /**
+       * Selector for the carousel's container. If false, carousel is $el.
+       * @name jquery.carousel#container
+       * @type String
+       * @default false
+       */
+      container: false,
+
+      /**
+       * Specify which iteration of the .carousel__list you'd like to index for
+       * the carousel.
+       * @name jquery.carousel#indexList
+       * @type Interger
+       * @default 0
+       */
+      indexList: 0,
+
+      /**
+       * The delay until the scroll event is triggered on the carousel after
+       * click.
+       * @name jquery.carousel#scrollEventDelay
+       * @type Integer
+       * @default 0
+       */
+      scrollEventDelay: 0,
+
+      /**
+       * Precompiled Handlebar templates to replace default. Expecting 'nav' for
+       * default navigation.
+       * @name jquery.carousel#templates
+       * @type Object
+       * @default {}
+       */
       templates: {}
     },
 
+    // Event listeners
     events: {
-      'click [data-goto]': 'handleClick'
+      'click [data-goto]': '_handleClick'
     },
 
+    // Initiate the plugin
     init: function(){
       var P = this;
 
@@ -40,23 +129,29 @@ define([
       P.$carouselList = $(P.carouselList);
       P.$currentPage = P.$el.find('[data-goto="1"]');
 
-      // Render
-      P.render();
+      // Update
+      P._update();
 
       // Update on resize
       $.respond.bind('resize', function(e, scrn){
-        P.render();
+        P._update();
         P.gotoPage(P.currentPage);
       });
 
       // Touch Support
       if(CP.Support.touch) {
-        P.initTouch();
+        P._initTouch();
       }
 
     },
 
-    render: function(){
+    /**
+     * Update the carousel's cached values and render and templates
+     * @name jquery.carousel#_update
+     * @private
+     * @function
+     */
+    _update: function(){
       var P = this;
 
       //Update Cache
@@ -69,19 +164,21 @@ define([
 
       // Template the pagination
       if(P.settings.pagination){
-        P.paginate();
+        P._paginate();
       }
     },
 
-    paginate: function(){
+    /**
+     * Render the pagination
+     * @name jquery.carousel#_paginate
+     * @private
+     * @function
+     */
+    _paginate: function(){
       var P = this;
 
       //Template
       P.pagination = P.T.nav({
-        // This bugs out ie8... super weird
-        // Issue with using "class"
-        // http://www.ecma-international.org/ecma-262/5.1/#sec-7.6.1.1
-        'class': P['settings']['paginationClass'],
         'pageCount': P.pageCount
       });
 
@@ -99,7 +196,15 @@ define([
       P.$currentPageCount = P.$pagination.find('.carousel__current-page-count');
     },
 
-    handleClick: function(e, target){
+    /**
+     * Callback when a user clicks the carousel
+     * @name jquery.carousel#_handleClick
+     * @private
+     * @function
+     * @param {event#object} e Click event object
+     * @param {element} target The targeted element
+     */
+    _handleClick: function(e, target){
       var P = this;
       var goTo = $(target).data('goto');
 
@@ -116,16 +221,32 @@ define([
       else P.gotoPage(goTo);
     },
 
+    /**
+     * Go to the next page on the carousel
+     * @name jquery.carousel#next
+     * @function
+     */
     next: function(){
       var P = this;
       P.gotoPage(P.currentPage + 1);
     },
 
+    /**
+     * Go to the previous page on the carousel
+     * @name jquery.carousel#previous
+     * @function
+     */
     previous: function(){
       var P = this;
       P.gotoPage(P.currentPage - 1);
     },
 
+    /**
+     * Go to a specific item in the carousel
+     * @name jquery.carousel#_gotoItem
+     * @private
+     * @function
+     */
     _gotoItem: function(item, animate){
       if(animate===undefined) animate = true;
 
@@ -159,6 +280,12 @@ define([
       P.settings.scrollEventDelay);
     },
 
+    /**
+     * Go to a specific page in the carousel
+     * @name jquery.carousel#gotoPage
+     * @function
+     * @param {Integer} page The desired page
+     */
     gotoPage: function(page, animate){
       if(animate===undefined) animate = true;
 
@@ -180,7 +307,13 @@ define([
       if(!!P.$currentPageCount) P.$currentPageCount.html(page);
     },
 
-    initTouch: function(){
+    /**
+     * Initiate the touch support for carousel's
+     * @name jquery.carousel#_initTouch
+     * @private
+     * @function
+     */
+    _initTouch: function(){
       var P = this;
 
       require(['cp.touch'], function(){

@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-jsdoc": "^0.5.4",
+    "ink-docstrap": "git://github.com/mattdrose/docstrap.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Matt Rose",
+    "email": "matt@mattrose.ca"
+  }
+}
