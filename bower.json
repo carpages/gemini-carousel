@@ -8,6 +8,9 @@
     "jquery-loader": "ssh://git@stash.carpages.ca/gem/jquery-loader.git",
     "jquery-boiler": "~0.1",
     "jquery-fold": "ssh://git@stash.carpages.ca/gem/jquery-fold.git",
-    "jquery-respond": "ssh://git@stash.carpages.ca/gem/jquery-respond.git"
+    "jquery-respond": "ssh://git@stash.carpages.ca/gem/jquery-respond.git",
+    "gemini-loader": "ssh://git@stash.carpages.ca/gem/gemini-loader.git",
+    "gemini-touch": "ssh://git@stash.carpages.ca/gem/gemini-touch.git",
+    "gemini-support": "ssh://git@stash.carpages.ca/gem/gemini-support.git"
   }
 }

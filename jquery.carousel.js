@@ -25,6 +25,7 @@ You can see this in the example
  * @requires jquery.respond
  * @requires gemini
  * @requires gemini.touch
+ * @requires gemini.support
 
  * @prop {boolean} pagination {@link jquery.carousel#pagination}
  * @prop {boolean} loop {@link jquery.carousel#loop}
@@ -55,12 +56,15 @@ You can see this in the example
 
 define([
     'jquery-loader',
+    'gemini-loader',
     'underscore',
     'jquery.carousel.templates',
     'jquery.boiler',
     'jquery.fold',
-    'jquery.respond'
-  ], function($, _, T){
+    'jquery.respond',
+    'gemini.support',
+    'gemini.touch'
+  ], function($, GEM, _, T){
 
   $.boiler('carousel', {
 
