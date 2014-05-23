@@ -151,7 +151,7 @@ define([
       });
 
       // Touch Support
-      if(GEM.Support.touch) {
+      if(GEM.support.touch) {
         P._initTouch();
       }
 
