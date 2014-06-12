@@ -1,7 +1,7 @@
 /**
  * @fileoverview
 
-A jQuery plugin to build dynamic carousel's. The plugin works
+A Gemini plugin to build dynamic carousel's. The plugin works
 mostly with CSS, meaning the markup is quite manipulatable.
 
 ### Notes
@@ -15,24 +15,22 @@ using the CSS extension ``carousel__list--{number}``.
 You can see this in the example
 
  *
- * @namespace jquery.carousel
+ * @namespace gemini.carousel
  * @copyright Carpages.ca 2014
  * @author Matt Rose <matt@mattrose.ca>
 
- * @requires jquery
- * @requires jquery.boiler
- * @requires jquery.fold
- * @requires jquery.respond
  * @requires gemini
+ * @requires gemini.fold
+ * @requires gemini.respond
  * @requires gemini.touch
  * @requires gemini.support
 
- * @prop {boolean} pagination {@link jquery.carousel#pagination}
- * @prop {boolean} loop {@link jquery.carousel#loop}
- * @prop {string} container {@link jquery.carousel#container}
- * @prop {integer} indexList {@link jquery.carousel#indexList}
- * @prop {integer} scrollEventDelay {@link jquery.carousel#scrollEventDelay}
- * @prop {object} templates {@link jquery.carousel#templates}
+ * @prop {boolean} pagination {@link gemini.carousel#pagination}
+ * @prop {boolean} loop {@link gemini.carousel#loop}
+ * @prop {string} container {@link gemini.carousel#container}
+ * @prop {integer} indexList {@link gemini.carousel#indexList}
+ * @prop {integer} scrollEventDelay {@link gemini.carousel#scrollEventDelay}
+ * @prop {object} templates {@link gemini.carousel#templates}
 
  * @example
   <html>
@@ -51,27 +49,26 @@ You can see this in the example
   </html>
 
  * @example
-  $('#js-carousel-example').carousel();
+  G('#js-carousel-example').carousel();
  */
 
 define([
-    'jquery-loader',
-    'gemini-loader',
-    'underscore',
-    'jquery.carousel.templates',
-    'jquery.boiler',
-    'jquery.fold',
-    'jquery.respond',
+    'gemini',
+    'gemini.carousel.templates',
+    'gemini.fold',
+    'gemini.respond',
     'gemini.support',
     'gemini.touch'
-  ], function($, GEM, _, T){
+  ], function($, T){
+
+  var _ = $._;
 
   $.boiler('carousel', {
 
     defaults: {
       /**
        * Whether to append pagination to the the carousel.
-       * @name jquery.carousel#pagination
+       * @name gemini.carousel#pagination
        * @type Boolean
        * @default false
        */
@@ -79,7 +76,7 @@ define([
 
       /**
        * Whether you want the carousel to loop.
-       * @name jquery.carousel#loop
+       * @name gemini.carousel#loop
        * @type Boolean
        * @default false
        */
@@ -87,7 +84,7 @@ define([
 
       /**
        * Selector for the carousel's container. If false, carousel is $el.
-       * @name jquery.carousel#container
+       * @name gemini.carousel#container
        * @type String
        * @default false
        */
@@ -96,7 +93,7 @@ define([
       /**
        * Specify which iteration of the .carousel__list you'd like to index for
        * the carousel.
-       * @name jquery.carousel#indexList
+       * @name gemini.carousel#indexList
        * @type Interger
        * @default 0
        */
@@ -105,7 +102,7 @@ define([
       /**
        * The delay until the scroll event is triggered on the carousel after
        * click.
-       * @name jquery.carousel#scrollEventDelay
+       * @name gemini.carousel#scrollEventDelay
        * @type Integer
        * @default 0
        */
@@ -114,7 +111,7 @@ define([
       /**
        * Precompiled Handlebar templates to replace default. Expecting 'nav' for
        * default navigation.
-       * @name jquery.carousel#templates
+       * @name gemini.carousel#templates
        * @type Object
        * @default {}
        */
@@ -163,7 +160,7 @@ define([
 
     /**
      * Update the carousel's cached values and render and templates
-     * @name jquery.carousel#_update
+     * @name gemini.carousel#_update
      * @private
      * @function
      */
@@ -186,7 +183,7 @@ define([
 
     /**
      * Render the pagination
-     * @name jquery.carousel#_paginate
+     * @name gemini.carousel#_paginate
      * @private
      * @function
      */
@@ -214,7 +211,7 @@ define([
 
     /**
      * Callback when a user clicks the carousel
-     * @name jquery.carousel#_handleClick
+     * @name gemini.carousel#_handleClick
      * @private
      * @function
      * @param {event#object} e Click event object
@@ -239,7 +236,7 @@ define([
 
     /**
      * Go to the next page on the carousel
-     * @name jquery.carousel#next
+     * @name gemini.carousel#next
      * @function
      */
     next: function(){
@@ -249,7 +246,7 @@ define([
 
     /**
      * Go to the previous page on the carousel
-     * @name jquery.carousel#previous
+     * @name gemini.carousel#previous
      * @function
      */
     previous: function(){
@@ -259,7 +256,7 @@ define([
 
     /**
      * Go to a specific item in the carousel
-     * @name jquery.carousel#_gotoItem
+     * @name gemini.carousel#_gotoItem
      * @private
      * @function
      */
@@ -305,7 +302,7 @@ define([
 
     /**
      * Go to a specific page in the carousel
-     * @name jquery.carousel#gotoPage
+     * @name gemini.carousel#gotoPage
      * @function
      * @param {Integer} page The desired page
      */
@@ -332,7 +329,7 @@ define([
 
     /**
      * Initiate the touch support for carousel's
-     * @name jquery.carousel#_initTouch
+     * @name gemini.carousel#_initTouch
      * @private
      * @function
      */
