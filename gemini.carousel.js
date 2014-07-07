@@ -141,6 +141,20 @@ define([
       P.carouselList = P.$carouselLists[P.settings.indexList];
       P.$carouselList = $(P.carouselList);
       P.$currentPage = P.$el.find('[data-goto="1"]');
+      P.$next = P.$el.find('[data-goto="next"],[data-goto="++"]');
+      P.$previous = P.$el.find('[data-goto="prev"],[data-goto="previous"],[data-goto="--"]');
+
+      //Change next/prev button active states
+      if(!P._isNext()) {
+        P.$next.addClass('is-inactive');
+      } else {
+        P.$next.removeClass('is-inactive');
+      }
+      if(!P._isPrevious()) {
+        P.$previous.addClass('is-inactive');
+      } else {
+        P.$previous.removeClass('is-inactive');
+      }
 
       // Update
       P._update();
@@ -235,13 +249,35 @@ define([
     },
 
     /**
+     * Check if there is a next page
+     * @name gemini.carousel#_isNext
+     * @private
+     * @function
+     * @return {boolean} Weather the next page exists
+     */
+    _isNext: function(){
+      return this.settings.loop || this.currentPage != this.pageCount;
+    },
+
+    /**
+     * Check if there is a previous page
+     * @name gemini.carousel#_isPrevious
+     * @private
+     * @function
+     * @return {boolean} Weather the previous page exists
+     */
+    _isPrevious: function(){
+      return this.settings.loop || this.currentPage != 1;
+    },
+
+    /**
      * Go to the next page on the carousel
      * @name gemini.carousel#next
      * @function
      */
     next: function(){
       var P = this;
-      P.gotoPage(P.currentPage + 1);
+      if(P._isNext()) P.gotoPage(P.currentPage + 1);
     },
 
     /**
@@ -251,7 +287,7 @@ define([
      */
     previous: function(){
       var P = this;
-      P.gotoPage(P.currentPage - 1);
+      if(P._isPrevious()) P.gotoPage(P.currentPage - 1);
     },
 
     /**
@@ -325,6 +361,18 @@ define([
       P.$currentPage = P.$el.find('[data-goto="'+P.currentPage+'"]');
       P.$currentPage.addClass('is-active');
       if(!!P.$currentPageCount) P.$currentPageCount.html(page);
+
+      //Change next/prev button active states
+      if(!P._isNext()) {
+        P.$next.addClass('is-inactive');
+      } else {
+        P.$next.removeClass('is-inactive');
+      }
+      if(!P._isPrevious()) {
+        P.$previous.addClass('is-inactive');
+      } else {
+        P.$previous.removeClass('is-inactive');
+      }
     },
 
     /**
