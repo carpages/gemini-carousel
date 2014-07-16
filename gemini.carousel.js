@@ -388,12 +388,12 @@ define([
 
         //Add touch events
         P.$carouselList.hammer({
-          drag_block_horizontal: true,
-          drag_lock_to_axis: true,
-          drag_lock_min_distance: 20,
+          dragBlockHorizontal: true,
+          dragLockToAxis: true,
+          dragLockMinDistance: 20,
           hold: false,
           tap: false
-        }).on('release dragleft dragright swipeleft swiperight', function(ev){
+        }).on('release dragleft dragright', function(ev){
 
           switch(ev.type) {
             case 'dragright':
@@ -403,36 +403,34 @@ define([
               var dragOffset = -ev.gesture.deltaX;
 
               // slow down at the first and last pane
-              if(
-                (P.currentPage == 1 && ev.gesture.direction == "right") ||
-                (P.currentPage == P.pageCount && ev.gesture.direction == "left")
-              ) {
+              if((P.currentPage == 1 && ev.gesture.direction == "right") ||
+                (P.currentPage == P.pageCount && ev.gesture.direction == "left")) {
                 dragOffset *= 0.4;
               }
 
               P.$carouselLists.scrollLeft(pageOffset + dragOffset);
               break;
 
-            case 'swipeleft':
-              P.next();
-              ev.gesture.stopDetect();
-              break;
-
-            case 'swiperight':
-              P.previous();
-              ev.gesture.stopDetect();
-              break;
-
             case 'release':
-              // more then 50% moved, navigate
-              if(Math.abs(ev.gesture.deltaX) > P.pageWidth/2) {
-                if(ev.gesture.direction == 'right') {
-                  P.previous();
-                } else {
+              // check if their finger is moving fast
+              if (ev.gesture.velocityX > 0.05) {
+                if (ev.gesture.interimDirection == "left") {
                   P.next();
+                } else if (ev.gesture.interimDirection == "right") {
+                  P.previous();
                 }
+              // snap carousel base on positioning of page
               } else {
-                P.gotoPage(P.currentPage);
+                // more then 50% moved, navigate
+                if (Math.abs(ev.gesture.deltaX) > P.pageWidth/2) {
+                  if (ev.gesture.direction == 'right') {
+                    P.previous();
+                  } else {
+                    P.next();
+                  }
+                } else {
+                  P.gotoPage(P.currentPage);
+                }
               }
               break;
             }
