@@ -29,7 +29,7 @@ You can see this in the example
  * @prop {boolean} loop {@link gemini.carousel#loop}
  * @prop {string} container {@link gemini.carousel#container}
  * @prop {integer} indexList {@link gemini.carousel#indexList}
- * @prop {integer} scrollEventDelay {@link gemini.carousel#scrollEventDelay}
+ * @prop {integer} scrollSpeed {@link gemini.carousel#scrollSpeed}
  * @prop {object} templates {@link gemini.carousel#templates}
 
  * @example
@@ -99,13 +99,12 @@ define([
       indexList: 0,
 
       /**
-       * The delay until the scroll event is triggered on the carousel after
-       * click.
-       * @name gemini.carousel#scrollEventDelay
+       * The speed that the carousel scrolls at in milliseconds.
+       * @name gemini.carousel#scrollSpeed
        * @type Integer
-       * @default 0
+       * @default 500
        */
-      scrollEventDelay: 0,
+      scrollSpeed: 500,
 
       /**
        * Precompiled Handlebar templates to replace default. Expecting 'nav' for
@@ -323,7 +322,7 @@ define([
       if(animate){
         P.$carouselLists.animate({
           scrollLeft:xOffset
-        }, 500);
+        }, P.settings.scrollSpeed);
       }else{
         P.$carouselLists.scrollLeft(xOffset);
       }
@@ -332,7 +331,7 @@ define([
         _.bind(function(){
           $(this).trigger("scroll");
         }, P.$carousel),
-      P.settings.scrollEventDelay);
+      P.settings.scrollSpeed);
     },
 
     /**
