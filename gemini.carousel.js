@@ -183,6 +183,7 @@ define([
 
       // Touch Support
       if($.support.touch) {
+        P.settings.animate = true;
         P._initTouch();
       }
 
