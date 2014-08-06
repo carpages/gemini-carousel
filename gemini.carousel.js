@@ -27,9 +27,11 @@ You can see this in the example
 
  * @prop {boolean} pagination {@link gemini.carousel#pagination}
  * @prop {boolean} loop {@link gemini.carousel#loop}
+ * @prop {boolean} animate {@link gemini.carousel#animate}
  * @prop {string} container {@link gemini.carousel#container}
  * @prop {integer} indexList {@link gemini.carousel#indexList}
  * @prop {integer} scrollSpeed {@link gemini.carousel#scrollSpeed}
+ * @prop {function} onChange {@link gemini.carousel#onChange}
  * @prop {object} templates {@link gemini.carousel#templates}
 
  * @example
@@ -74,6 +76,14 @@ define([
       pagination: false,
 
       /**
+       * Whether to do a scroll animation when clicked
+       * @name gemini.carousel#animate
+       * @type Boolean
+       * @default false
+       */
+      animate: true,
+
+      /**
        * Whether you want the carousel to loop.
        * @name gemini.carousel#loop
        * @type Boolean
@@ -105,6 +115,14 @@ define([
        * @default 500
        */
       scrollSpeed: 500,
+
+      /**
+       * Callback function to run when the item changes
+       * @name gemini.carousel#onChange
+       * @type function
+       * @default false
+       */
+      onChange: false,
 
       /**
        * Precompiled Handlebar templates to replace default. Expecting 'nav' for
@@ -160,7 +178,7 @@ define([
       // Update on resize
       $.respond.bind('resize', function(e, scrn){
         P._update();
-        P.gotoPage(P.currentPage);
+        P.gotoPage(P.currentPage, false);
       });
 
       // Touch Support
@@ -330,8 +348,9 @@ define([
       setTimeout(
         _.bind(function(){
           $(this).trigger("scroll");
+          if(P.settings.onChange) P.settings.onChange.call(P);
         }, P.$carousel),
-      P.settings.scrollSpeed);
+      animate ? P.settings.scrollSpeed: 0);
     },
 
     /**
@@ -341,9 +360,10 @@ define([
      * @param {Integer} page The desired page
      */
     gotoPage: function(page, animate){
-      if(animate===undefined) animate = true;
-
       var P = this;
+
+      if(animate===undefined) animate = P.settings.animate;
+
       if(page > P.pageCount) {
         if (P.settings.loop) P.gotoPage(1);
         return;
