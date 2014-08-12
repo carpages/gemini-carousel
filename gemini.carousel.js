@@ -31,6 +31,7 @@ You can see this in the example
  * @prop {string} container {@link gemini.carousel#container}
  * @prop {integer} indexList {@link gemini.carousel#indexList}
  * @prop {integer} scrollSpeed {@link gemini.carousel#scrollSpeed}
+ * @prop {boolean} thumbs {@link gemini.carousel#thumbs}
  * @prop {function} onChange {@link gemini.carousel#onChange}
  * @prop {object} templates {@link gemini.carousel#templates}
 
@@ -114,7 +115,16 @@ define([
        * @type Integer
        * @default 500
        */
-      scrollSpeed: 500,
+      scrollSpeed: 350,
+
+      /**
+       * Whether to map a list of thumbnails to the corresponding pages. Default
+       * class expected is ``carousel__thumbs``.
+       * @name gemini.carousel#thumbs
+       * @type Boolean
+       * @default false
+       */
+      thumbs: false,
 
       /**
        * Callback function to run when the item changes
@@ -180,6 +190,17 @@ define([
         P._update();
         P.gotoPage(P.currentPage, false);
       });
+
+      // Setup thumbnails
+      if (P.settings.thumbs) {
+        P.$thumbs = P.$el.find('.carousel__thumbs');
+        P.$thumbs.find('a').each(function(i){
+          $(this).click(function(e){
+            e.preventDefault();
+            P.gotoPage(i + 1);
+          });
+        });
+      }
 
       // Touch Support
       if($.support.touch) {
