@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gemini Carousel Test</title>
+
+  <!-- Load local jQuery. -->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+
+  <!-- Load local QUnit. -->
+  <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" media="screen">
+  <link rel="stylesheet" href="gemini-carousel.test.css" media="screen">
+  <script src="../bower_components/qunit/qunit/qunit.js"></script>
+  <script>QUnit.config.autostart = false;</script>
+
+  <!-- Removing access to jQuery and $. But it'll still be available as _$, if
+       you REALLY want to mess around with jQuery in the console. REMEMBER WE
+       ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. -->
+  <script>window._$ = jQuery.noConflict(true);</script>
+
+  <script>window.G={D:{_qj:[]}};G.Q=function(k){G.D._qj.push(k)};//0.1.0</script>
+</head>
+<body>
+
+  <div id="qunit"></div>
+
+  <div id="js-fixtures">
+    <div id="js-fixture-1" class="carousel">
+      <ul class="carousel__list">
+        <li>
+          <h3>Item 1</h3>
+          <img src="http://placetim.com/200/100/">
+        </li>
+        <li>
+          <h3>Item 2</h3>
+          <img src="http://placetim.com/200/100/">
+        </li>
+        <li>
+          <h3>Item 3</h3>
+          <img src="http://placetim.com/200/100/">
+        </li>
+        <li>
+          <h3>Item 4</h3>
+          <img src="http://placetim.com/200/100/">
+        </li>
+        <li>
+          <h3>Item 5</h3>
+          <img src="http://placetim.com/200/100/">
+        </li>
+      </ul>
+      <button id="js-button-1" data-goto="--">Previous</button>
+      <button id="js-button-2" data-goto="++">Next</button>
+    </div>
+  </div>
+
+  <!-- Load tests. -->
+  <script data-main="gemini-carousel.test" src="../bower_components/requirejs/require.js"></script>
+</body>
+</html>
