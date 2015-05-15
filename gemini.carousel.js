@@ -59,8 +59,7 @@ define([
     'gemini',
     'gemini.carousel.templates',
     'gemini.fold',
-    'gemini.respond',
-    'gemini.support'
+    'gemini.respond'
   ], function($, T){
 
   var _ = $._;
