@@ -16,6 +16,6 @@
     "gemini-fold": "~0",
     "gemini-respond": "~0",
     "gemini-touch": "~0",
-    "gemini-support": "~0"
+    "gemini-css": "~1"
   }
 }

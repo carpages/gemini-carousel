@@ -1,36 +1,65 @@
-/*------------------------------------*\
-    $CAROUSEL
-\*------------------------------------*/
+/**
+ ********************************
+ * _CAROUSEL.SCSS
+ ********************************
+ */
 
-.carousel{
-  position:relative;
+/**
+ * @module Carousels [.carousel]
+ * @description Responsive carousels for use with the javascript plugin
+ *
+ * @modifier [.carousel--2] Make the carousel two wide
+ * @modifier [.carousel--3] Make the carousel three wide
+ * @modifier [.carousel--4] Make the carousel four wide
+ * @modifier [.carousel--5] Make the carousel five wide
+ *
+ * @markup Carousel
+    <div class="carousel">
+      <ul class="carousel__list">
+        <li>
+          <img src="http://placetim.com/200/100/" />
+        </li>
+        <li>
+          <img src="http://placetim.com/200/100/" />
+        </li>
+      </ul>
+    </div>
+ */
+[class*="carousel"] {
+  position: relative;
 }
 
-.carousel__list{
-  @extend %gpu;
-  @extend .clearfix;
-  @extend .list--no-style;
-  position:relative;
-  margin:0;
-  white-space:nowrap;
-  overflow:hidden;
+  /**
+   * @submodule Carousel List [.carousel__list]
+   * @description The list of content for the carousel. You can add as many
+   * items to the list, and the carousel will automatically respond and
+   * adjust.
+   */
+  .carousel__list {
+    @include gpu;
+    @include clearfix;
+    @include prune-list;
+    position: relative;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
 
-  > li{
-    width: 100%;
-    display:inline-block;
-    vertical-align:top;
-  }
-}
-
-@for $display from 2 through 5{
-
-  .carousel__list--#{$display} > li{
-    @include quick-media-query(medium){
-      width: 100% * 0.5;
+    > li{
+      width: 100%;
+      display: inline-block;
+      vertical-align: top;
     }
-    @include quick-media-query(large){
-      width: 100% / $display;
-    }
   }
 
-}
+  @for $display from 2 through 5 {
+
+    .carousel__list--#{$display} > li {
+      @include media(medium) {
+        width: 100% * 0.5;
+      }
+      @include media(large) {
+        width: 100% / $display;
+      }
+    }
+
+  }
