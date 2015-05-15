@@ -339,6 +339,10 @@ define([
       var P = this;
       if(item > P.itemCount) return;
 
+      //Find what item to scroll to
+      item = Math.min(P.itemCount - P.itemsPerPage + 1, item);
+      item = Math.max(1, item);
+
       //Calculate the x offset in pixels
       var $item = P.$carouselList.children('li:nth-child('+item+')'),
           xOffset = $item.offset().left -
