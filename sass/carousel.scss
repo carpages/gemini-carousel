@@ -53,7 +53,7 @@
 
   @for $display from 2 through 5 {
 
-    .carousel__list--#{$display} > li {
+    .carousel--#{$display} .carousel__list > li {
       @include media(medium) {
         width: 100% * 0.5;
       }
