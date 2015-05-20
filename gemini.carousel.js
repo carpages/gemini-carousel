@@ -55,12 +55,28 @@ You can see this in the example
   G('#js-carousel-example').carousel();
  */
 
-define([
-    'gemini',
-    'gemini.carousel.templates',
-    'gemini.fold',
-    'gemini.respond'
-  ], function($, T){
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define([
+      'gemini',
+      'gemini.carousel.templates',
+      'gemini.fold',
+      'gemini.respond'
+    ], factory);
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(
+      require('gemini'),
+      require('./templates.js'),
+      require('gemini.fold'),
+      require('gemini.respond')
+    );
+  } else {
+    // Browser globals
+    factory(G, Templates.carousel);
+  }
+}(function($, T) {
 
   var _ = $._;
 
@@ -427,7 +443,15 @@ define([
     _initTouch: function(){
       var P = this;
 
-      require(['gemini.touch'], function(){
+      (function(factory) {
+        if (typeof define === 'function' && define.amd) {
+          define(['gemini.touch'], factory);
+        } else if (typeof exports === 'object') {
+          module.exports = factory(require('gemini.touch'));
+        } else {
+          factory();
+        }
+      }(function() {
 
         //Add touch events
         P.$carouselList.hammer({
@@ -478,7 +502,7 @@ define([
               break;
             }
         });
-      });
+      }));
     }
 
   });
@@ -487,4 +511,4 @@ define([
   // This way you don't need to require both jquery and the plugin
   return $;
 
-});
+}));

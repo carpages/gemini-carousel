@@ -20,7 +20,7 @@ module.exports = function (grunt) {
       compile: {
         options: {
           amd: true,
-          namespace: 'gemini.carousel',
+          namespace: 'Templates.carousel',
           processName: function(filename) {
             return filename.split('/').pop().replace('.hbs','');
           }
