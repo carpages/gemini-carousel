@@ -19,8 +19,8 @@ module.exports = function (grunt) {
     handlebars: {
       compile: {
         options: {
-          amd: true,
-          namespace: 'Templates.carousel',
+          umd: true,
+          namespace: 'Templates.Default.Carousel',
           processName: function(filename) {
             return filename.split('/').pop().replace('.hbs','');
           }

@@ -1,9 +1,26 @@
-define(['handlebars'], function(Handlebars) {
+(function(factory) {
 
-this["gemini"] = this["gemini"] || {};
-this["gemini"]["carousel"] = this["gemini"]["carousel"] || {};
+if (typeof define === 'function' && define.amd) {
 
-this["gemini"]["carousel"]["nav"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+define(['handlebars'], factory);
+
+} else if (typeof exports === 'object') {
+
+module.exports = factory(require('handlebars'));
+
+} else {
+
+factory(Handlebars);
+
+}
+
+}(function(Handlebars) {
+
+this["Templates"] = this["Templates"] || {};
+this["Templates"]["Default"] = this["Templates"]["Default"] || {};
+this["Templates"]["Default"]["Carousel"] = this["Templates"]["Default"]["Carousel"] || {};
+
+this["Templates"]["Default"]["Carousel"]["nav"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var helper;
 
   return "<ol class=\"carousel__nav pagination pagination--carousel\">\n\n 	<li class=\"pagination__prev\"><a href=\"#\" data-goto=\"--\">Previous</a></li>\n\n	<li class=\"pagination__item\">\n		<span class=\"carousel__current-page-count\">1</span>\n		/\n		<span class=\"carousel__page-count\">"
@@ -11,6 +28,6 @@ this["gemini"]["carousel"]["nav"] = Handlebars.template({"compiler":[6,">= 2.0.0
     + "</span>\n	</li>\n\n	<li class=\"pagination__next\"><a href=\"#\" data-goto=\"++\">Next</a></li>\n\n</ol>\n";
 },"useData":true});
 
-return this["gemini"];
+return this["Templates"]["Default"]["Carousel"];
 
-});
+}));
