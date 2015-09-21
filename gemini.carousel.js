@@ -408,6 +408,9 @@ You can see this in the example
       if(page > P.pageCount) {
         if (P.settings.loop) P.gotoPage(1);
         return;
+      } else if (page < 1) {
+        if (P.settings.loop) P.gotoPage(P.pageCount - 1);
+        return;
       }
 
       var item = P.itemsPerPage * (page - 1) + 1;
