@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v1.0.2
+
+    - Fix looping to work both ways
+
+## v1.0.1
+
+    - Fix Handlebar templates
+    - Update package.json with proper dependencies
+
 ## v1.0.0
 
     - Requires Handlebars v3.0.3 now
