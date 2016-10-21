@@ -67,7 +67,7 @@ You can see this in the example
   } else if ( typeof exports === 'object' ) {
     // Node/CommonJS
     module.exports = factory(
-      require( 'gemini' ),
+      require( 'gemini-loader' ),
       require( './templates.js' ),
       require( 'gemini.fold' ),
       require( 'gemini.respond' )
