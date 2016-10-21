@@ -1,3 +1,4 @@
+/* global Templates */
 /**
  * @fileoverview
 
@@ -174,7 +175,7 @@ You can see this in the example
       P.currentItem = P.currentPage = 1;
 
       // Cache jQuery objects
-      P.$carousel = !!P.settings.container
+      P.$carousel = P.settings.container
         ? P.$el.find( P.settings.container )
         : P.$el;
 
@@ -293,10 +294,10 @@ You can see this in the example
 
       e.preventDefault();
 
-      if ( goTo == 'next' || goTo == '++' ) {
+      if ( goTo === 'next' || goTo === '++' ) {
         // Next
         P.next();
-      } else if ( goTo == 'prev' || goTo == 'previous' || goTo == '--' ) {
+      } else if ( goTo === 'prev' || goTo === 'previous' || goTo === '--' ) {
         // Previous
         P.previous();
       } else {
@@ -313,7 +314,7 @@ You can see this in the example
      * @return {boolean} Weather the next page exists
      */
     _isNext: function() {
-      return this.settings.loop || this.currentPage != this.pageCount;
+      return this.settings.loop || this.currentPage !== this.pageCount;
     },
 
     /**
@@ -324,7 +325,7 @@ You can see this in the example
      * @return {boolean} Weather the previous page exists
      */
     _isPrevious: function() {
-      return this.settings.loop || this.currentPage != 1;
+      return this.settings.loop || this.currentPage !== 1;
     },
 
     /**
@@ -442,7 +443,7 @@ You can see this in the example
       P.$currentPage.removeClass( 'is-active' );
       P.$currentPage = P.$el.find( '[data-goto="' + P.currentPage + '"]' );
       P.$currentPage.addClass( 'is-active' );
-      if ( !!P.$currentPageCount ) {
+      if ( P.$currentPageCount ) {
         P.$currentPageCount.html( page );
       }
 
@@ -495,8 +496,8 @@ You can see this in the example
 
               // slow down at the first and last pane
               if (
-                ( P.currentPage == 1 && ev.gesture.direction == 'right' ) ||
-                ( P.currentPage == P.pageCount && ev.gesture.direction == 'left' )
+                ( P.currentPage === 1 && ev.gesture.direction === 'right' ) ||
+                ( P.currentPage === P.pageCount && ev.gesture.direction === 'left' )
               ) {
                 dragOffset *= 0.4;
               }
@@ -507,16 +508,16 @@ You can see this in the example
             case 'release':
               // check if their finger is moving fast
               if ( ev.gesture.velocityX > 0.05 ) {
-                if ( ev.gesture.interimDirection == 'left' ) {
+                if ( ev.gesture.interimDirection === 'left' ) {
                   P.next();
-                } else if ( ev.gesture.interimDirection == 'right' ) {
+                } else if ( ev.gesture.interimDirection === 'right' ) {
                   P.previous();
                 }
               // snap carousel base on positioning of page
               } else {
                 // more then 50% moved, navigate
                 if ( Math.abs( ev.gesture.deltaX ) > P.pageWidth / 2 ) {
-                  if ( ev.gesture.direction == 'right' ) {
+                  if ( ev.gesture.direction === 'right' ) {
                     P.previous();
                   } else {
                     P.next();
