@@ -55,32 +55,31 @@ You can see this in the example
   G('#js-carousel-example').carousel();
  */
 
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
+( function( factory ) {
+  if ( typeof define === 'function' && define.amd ) {
     // AMD. Register as an anonymous module.
     define([
       'gemini',
       'gemini.carousel.templates',
       'gemini.fold',
       'gemini.respond'
-    ], factory);
-  } else if (typeof exports === 'object') {
+    ], factory );
+  } else if ( typeof exports === 'object' ) {
     // Node/CommonJS
     module.exports = factory(
-      require('gemini'),
-      require('./templates.js'),
-      require('gemini.fold'),
-      require('gemini.respond')
+      require( 'gemini' ),
+      require( './templates.js' ),
+      require( 'gemini.fold' ),
+      require( 'gemini.respond' )
     );
   } else {
     // Browser globals
-    factory(G, Templates.carousel);
+    factory( G, Templates.carousel );
   }
-}(function($, T) {
-
+}( function( $, T ) {
   var _ = $._;
 
-  $.boiler('carousel', {
+  $.boiler( 'carousel', {
 
     defaults: {
       /**
@@ -165,64 +164,64 @@ You can see this in the example
     },
 
     // Initiate the plugin
-    init: function(){
+    init: function() {
       var P = this;
 
-      //Extend the templates
-      P.T = $.extend(T, P.settings.templates);
+      // Extend the templates
+      P.T = $.extend( T, P.settings.templates );
 
       // Init variables
       P.currentItem = P.currentPage = 1;
 
       // Cache jQuery objects
-      P.$carousel = !!P.settings.container ?
-                    P.$el.find(P.settings.container) :
-                    P.$el;
-      P.$carouselLists = P.$el.find('.carousel__list');
-      P.carouselList = P.$carouselLists[P.settings.indexList];
-      P.$carouselList = $(P.carouselList);
-      P.$currentPage = P.$el.find('[data-goto="1"]');
-      P.$next = P.$el.find('[data-goto="next"],[data-goto="++"]');
-      P.$previous = P.$el.find('[data-goto="prev"],[data-goto="previous"],[data-goto="--"]');
+      P.$carousel = !!P.settings.container
+        ? P.$el.find( P.settings.container )
+        : P.$el;
 
-      //Change next/prev button active states
-      if(!P._isNext()) {
-        P.$next.addClass('is-inactive');
+      P.$carouselLists = P.$el.find( '.carousel__list' );
+      P.carouselList = P.$carouselLists[P.settings.indexList];
+      P.$carouselList = $( P.carouselList );
+      P.$currentPage = P.$el.find( '[data-goto="1"]' );
+      P.$next = P.$el.find( '[data-goto="next"],[data-goto="++"]' );
+      P.$previous = P.$el.find( '[data-goto="prev"],[data-goto="previous"],[data-goto="--"]' );
+
+      // Change next/prev button active states
+      if ( !P._isNext()) {
+        P.$next.addClass( 'is-inactive' );
       } else {
-        P.$next.removeClass('is-inactive');
+        P.$next.removeClass( 'is-inactive' );
       }
-      if(!P._isPrevious()) {
-        P.$previous.addClass('is-inactive');
+      if ( !P._isPrevious()) {
+        P.$previous.addClass( 'is-inactive' );
       } else {
-        P.$previous.removeClass('is-inactive');
+        P.$previous.removeClass( 'is-inactive' );
       }
 
       // Update
       P._update();
 
       // Update on resize
-      $.respond.bind('resize', function(e, scrn){
+      $.respond.bind( 'resize', function( e, scrn ) {
         P._update();
-        P.gotoPage(P.currentPage, false);
+        P.gotoPage( P.currentPage, false );
       });
 
       // Setup thumbnails
-      if (P.settings.thumbs) {
-        P.$thumbs = P.$el.find('.carousel__thumbs');
-        P.$thumbs.find('a').each(function(i){
-          $(this).click(function(e){
+      if ( P.settings.thumbs ) {
+        P.$thumbs = P.$el.find( '.carousel__thumbs' );
+        P.$thumbs.find( 'a' ).each( function( i ) {
+          $( this ).click( function( e ) {
             e.preventDefault();
-            P.gotoPage(i + 1);
+            P.gotoPage( i + 1 );
           });
         });
       }
 
       // Touch Support
-      if($.support.touch) {
+      if ( $.support.touch ) {
         P.settings.animate = true;
         P._initTouch();
       }
-
     },
 
     /**
@@ -231,19 +230,19 @@ You can see this in the example
      * @private
      * @function
      */
-    _update: function(){
+    _update: function() {
       var P = this;
 
-      //Update Cache
+      // Update Cache
       P.pageWidth = P.$carouselList.width();
-      P.itemWidth = P.$carouselList.children('li:first-child').width();
-      P.itemsPerPage = Math.round(P.pageWidth/P.itemWidth);
+      P.itemWidth = P.$carouselList.children( 'li:first-child' ).width();
+      P.itemsPerPage = Math.round( P.pageWidth / P.itemWidth );
 
-      P.itemCount = P.$carouselList.children('li').length;
+      P.itemCount = P.$carouselList.children( 'li' ).length;
       P.pageCount = Math.ceil( P.itemCount / P.itemsPerPage );
 
       // Template the pagination
-      if(P.settings.pagination){
+      if ( P.settings.pagination ) {
         P._paginate();
       }
     },
@@ -254,26 +253,26 @@ You can see this in the example
      * @private
      * @function
      */
-    _paginate: function(){
+    _paginate: function() {
       var P = this;
 
-      //Template
+      // Template
       P.pagination = P.T.nav({
         'pageCount': P.pageCount
       });
 
-      //Render
-      if(!P.$pagination){
-        //First load
-        P.$pagination = $('<span/>').append(P.pagination);
-        P.$el.append(P.$pagination);
+      // Render
+      if ( !P.$pagination ) {
+        // First load
+        P.$pagination = $( '<span/>' ).append( P.pagination );
+        P.$el.append( P.$pagination );
       } else {
-        //Replace exisiting
-        P.$pagination.html(P.pagination);
+        // Replace exisiting
+        P.$pagination.html( P.pagination );
       }
 
-      //Cache
-      P.$currentPageCount = P.$pagination.find('.carousel__current-page-count');
+      // Cache
+      P.$currentPageCount = P.$pagination.find( '.carousel__current-page-count' );
     },
 
     /**
@@ -284,21 +283,26 @@ You can see this in the example
      * @param {event#object} e Click event object
      * @param {element} target The targeted element
      */
-    _handleClick: function(e, target){
+    _handleClick: function( e, target ) {
       var P = this;
-      var goTo = $(target).data('goto');
+      var goTo = $( target ).data( 'goto' );
 
-      if(!goTo) return;
+      if ( !goTo ) {
+        return;
+      }
 
       e.preventDefault();
-      //Next
-      if(goTo == "next" || goTo == "++")
+
+      if ( goTo == 'next' || goTo == '++' ) {
+        // Next
         P.next();
-      //Previous
-      else if(goTo == "prev" || goTo == "previous" || goTo == "--")
+      } else if ( goTo == 'prev' || goTo == 'previous' || goTo == '--' ) {
+        // Previous
         P.previous();
-      //Go to page
-      else P.gotoPage(goTo);
+      } else {
+        // Go to page
+        P.gotoPage( goTo );
+      }
     },
 
     /**
@@ -308,7 +312,7 @@ You can see this in the example
      * @function
      * @return {boolean} Weather the next page exists
      */
-    _isNext: function(){
+    _isNext: function() {
       return this.settings.loop || this.currentPage != this.pageCount;
     },
 
@@ -319,7 +323,7 @@ You can see this in the example
      * @function
      * @return {boolean} Weather the previous page exists
      */
-    _isPrevious: function(){
+    _isPrevious: function() {
       return this.settings.loop || this.currentPage != 1;
     },
 
@@ -328,9 +332,12 @@ You can see this in the example
      * @name gemini.carousel#next
      * @function
      */
-    next: function(){
+    next: function() {
       var P = this;
-      if(P._isNext()) P.gotoPage(P.currentPage + 1);
+
+      if ( P._isNext()) {
+        P.gotoPage( P.currentPage + 1 );
+      }
     },
 
     /**
@@ -338,9 +345,12 @@ You can see this in the example
      * @name gemini.carousel#previous
      * @function
      */
-    previous: function(){
+    previous: function() {
       var P = this;
-      if(P._isPrevious()) P.gotoPage(P.currentPage - 1);
+
+      if ( P._isPrevious()) {
+        P.gotoPage( P.currentPage - 1 );
+      }
     },
 
     /**
@@ -349,49 +359,57 @@ You can see this in the example
      * @private
      * @function
      */
-    _gotoItem: function(item, animate){
-      if(animate===undefined) animate = true;
+    _gotoItem: function( item, animate ) {
+      if ( animate === undefined ) {
+        animate = true;
+      }
 
       var P = this;
-      if(item > P.itemCount) return;
 
-      //Find what item to scroll to
-      item = Math.min(P.itemCount - P.itemsPerPage + 1, item);
-      item = Math.max(1, item);
+      if ( item > P.itemCount ) {
+        return;
+      }
 
-      //Calculate the x offset in pixels
-      var $item = P.$carouselList.children('li:nth-child('+item+')'),
-          xOffset = $item.offset().left -
+      // Find what item to scroll to
+      item = Math.min( P.itemCount - P.itemsPerPage + 1, item );
+      item = Math.max( 1, item );
+
+      // Calculate the x offset in pixels
+      var $item = P.$carouselList.children( 'li:nth-child(' + item + ')' );
+      var xOffset = $item.offset().left -
                     P.$carouselList.offset().left +
                     P.carouselList.scrollLeft;
 
-      //Whether there are more items to scroll to
+      // Whether there are more items to scroll to
       var isMoreItems = $.rightoffold(
-        P.$carouselList.find('li').last(),{
-          container:P.$carouselList,
-          threshold:-P.itemWidth-20
+        P.$carouselList.find( 'li' ).last(), {
+          container: P.$carouselList,
+          threshold: -P.itemWidth - 20
         }
       );
 
-      //Make sure there's something to scroll to
-      if ((item > P.currentItem && !isMoreItems) || xOffset < 0) return;
+      // Make sure there's something to scroll to
+      if (( item > P.currentItem && !isMoreItems ) || xOffset < 0 ) {
+        return;
+      }
 
-      //Change the item
+      // Change the item
       P.currentItem = item;
-      if(animate){
+      if ( animate ) {
         P.$carouselLists.animate({
-          scrollLeft:xOffset
-        }, P.settings.scrollSpeed);
-      }else{
-        P.$carouselLists.scrollLeft(xOffset);
+          scrollLeft: xOffset
+        }, P.settings.scrollSpeed );
+      } else {
+        P.$carouselLists.scrollLeft( xOffset );
       }
 
       setTimeout(
-        _.bind(function(){
-          $(this).trigger("scroll");
-          if(P.settings.onChange) P.settings.onChange.call(P);
-        }, P.$carousel),
-      animate ? P.settings.scrollSpeed: 0);
+        _.bind( function() {
+          $( this ).trigger( 'scroll' );
+          if ( P.settings.onChange ) P.settings.onChange.call( P );
+        }, P.$carousel ),
+        animate ? P.settings.scrollSpeed : 0
+      );
     },
 
     /**
@@ -400,40 +418,45 @@ You can see this in the example
      * @function
      * @param {Integer} page The desired page
      */
-    gotoPage: function(page, animate){
+    gotoPage: function( page, animate ) {
       var P = this;
 
-      if(animate===undefined) animate = P.settings.animate;
+      if ( animate === undefined ) {
+        animate = P.settings.animate;
+      }
 
-      if(page > P.pageCount) {
-        if (P.settings.loop) P.gotoPage(1);
+      if ( page > P.pageCount ) {
+        if ( P.settings.loop ) P.gotoPage( 1 );
         return;
-      } else if (page < 1) {
-        if (P.settings.loop) P.gotoPage(P.pageCount - 1);
+      } else if ( page < 1 ) {
+        if ( P.settings.loop ) P.gotoPage( P.pageCount - 1 );
         return;
       }
 
-      var item = P.itemsPerPage * (page - 1) + 1;
+      var item = P.itemsPerPage * ( page - 1 ) + 1;
 
-      P._gotoItem(item, animate);
+      P._gotoItem( item, animate );
 
-      //Change active page
+      // Change active page
       P.currentPage = page;
-      P.$currentPage.removeClass('is-active');
-      P.$currentPage = P.$el.find('[data-goto="'+P.currentPage+'"]');
-      P.$currentPage.addClass('is-active');
-      if(!!P.$currentPageCount) P.$currentPageCount.html(page);
-
-      //Change next/prev button active states
-      if(!P._isNext()) {
-        P.$next.addClass('is-inactive');
-      } else {
-        P.$next.removeClass('is-inactive');
+      P.$currentPage.removeClass( 'is-active' );
+      P.$currentPage = P.$el.find( '[data-goto="' + P.currentPage + '"]' );
+      P.$currentPage.addClass( 'is-active' );
+      if ( !!P.$currentPageCount ) {
+        P.$currentPageCount.html( page );
       }
-      if(!P._isPrevious()) {
-        P.$previous.addClass('is-inactive');
+
+      // Change next/prev button active states
+      if ( !P._isNext()) {
+        P.$next.addClass( 'is-inactive' );
       } else {
-        P.$previous.removeClass('is-inactive');
+        P.$next.removeClass( 'is-inactive' );
+      }
+
+      if ( !P._isPrevious()) {
+        P.$previous.addClass( 'is-inactive' );
+      } else {
+        P.$previous.removeClass( 'is-inactive' );
       }
     },
 
@@ -443,67 +466,67 @@ You can see this in the example
      * @private
      * @function
      */
-    _initTouch: function(){
+    _initTouch: function() {
       var P = this;
 
-      (function(factory) {
-        if (typeof define === 'function' && define.amd) {
-          define(['gemini.touch'], factory);
-        } else if (typeof exports === 'object') {
-          module.exports = factory(require('gemini.touch'));
+      ( function( factory ) {
+        if ( typeof define === 'function' && define.amd ) {
+          define([ 'gemini.touch' ], factory );
+        } else if ( typeof exports === 'object' ) {
+          module.exports = factory( require( 'gemini.touch' ));
         } else {
           factory();
         }
-      }(function() {
-
-        //Add touch events
+      }( function() {
+        // Add touch events
         P.$carouselList.hammer({
           dragBlockHorizontal: true,
-          dragLockToAxis: true,
+          dragLockToAxis:      true,
           dragLockMinDistance: 20,
-          hold: false,
-          tap: false
-        }).on('release dragleft dragright', function(ev){
-
-          switch(ev.type) {
+          hold:                false,
+          tap:                 false
+        }).on( 'release dragleft dragright', function( ev ) {
+          switch ( ev.type ) {
             case 'dragright':
             case 'dragleft':
               // stick to the finger
-              var pageOffset = (P.currentPage-1)*P.pageWidth;
+              var pageOffset = ( P.currentPage - 1 ) * P.pageWidth;
               var dragOffset = -ev.gesture.deltaX;
 
               // slow down at the first and last pane
-              if((P.currentPage == 1 && ev.gesture.direction == "right") ||
-                (P.currentPage == P.pageCount && ev.gesture.direction == "left")) {
+              if (
+                ( P.currentPage == 1 && ev.gesture.direction == 'right' ) ||
+                ( P.currentPage == P.pageCount && ev.gesture.direction == 'left' )
+              ) {
                 dragOffset *= 0.4;
               }
 
-              P.$carouselLists.scrollLeft(pageOffset + dragOffset);
+              P.$carouselLists.scrollLeft( pageOffset + dragOffset );
               break;
 
             case 'release':
               // check if their finger is moving fast
-              if (ev.gesture.velocityX > 0.05) {
-                if (ev.gesture.interimDirection == "left") {
+              if ( ev.gesture.velocityX > 0.05 ) {
+                if ( ev.gesture.interimDirection == 'left' ) {
                   P.next();
-                } else if (ev.gesture.interimDirection == "right") {
+                } else if ( ev.gesture.interimDirection == 'right' ) {
                   P.previous();
                 }
               // snap carousel base on positioning of page
               } else {
                 // more then 50% moved, navigate
-                if (Math.abs(ev.gesture.deltaX) > P.pageWidth/2) {
-                  if (ev.gesture.direction == 'right') {
+                if ( Math.abs( ev.gesture.deltaX ) > P.pageWidth / 2 ) {
+                  if ( ev.gesture.direction == 'right' ) {
                     P.previous();
                   } else {
                     P.next();
                   }
                 } else {
-                  P.gotoPage(P.currentPage);
+                  P.gotoPage( P.currentPage );
                 }
               }
               break;
-            }
+          }
         });
       }));
     }
@@ -513,5 +536,4 @@ You can see this in the example
   // Return the jquery object
   // This way you don't need to require both jquery and the plugin
   return $;
-
 }));
