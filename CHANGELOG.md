@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.5
+
+  - Update CommonJS require to proper module name
+
 ## v1.0.4
 
   - Fix linting grunt task
