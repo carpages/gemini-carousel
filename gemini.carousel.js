@@ -70,8 +70,8 @@ You can see this in the example
     module.exports = factory(
       require( 'gemini-loader' ),
       require( './templates.js' ),
-      require( 'gemini.fold' ),
-      require( 'gemini.respond' )
+      require( 'gemini-fold' ),
+      require( 'gemini-respond' )
     );
   } else {
     // Browser globals
@@ -474,7 +474,9 @@ You can see this in the example
         if ( typeof define === 'function' && define.amd ) {
           define([ 'gemini.touch' ], factory );
         } else if ( typeof exports === 'object' ) {
-          module.exports = factory( require( 'gemini.touch' ));
+          module.exports = factory(
+            require( 'gemini-touch' )
+          );
         } else {
           factory();
         }
