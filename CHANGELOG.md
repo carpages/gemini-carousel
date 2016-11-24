@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.6
+
+  - Fix math for looping to last slide from first slide
+
 ## v1.0.5
 
   - Update CommonJS require to proper module name
