@@ -249,6 +249,16 @@ You can see this in the example
     },
 
     /**
+     * Call the carousel's _update function
+     * @name gemini.carousel#update
+     * @method
+     * @function
+     */
+    update: function() {
+      this._update();
+    },
+
+    /**
      * Render the pagination
      * @name gemini.carousel#_paginate
      * @private
