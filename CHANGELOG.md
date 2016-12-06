@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.7
+
+  - Add a public update method
+
 ## v1.0.6
 
   - Fix math for looping to last slide from first slide

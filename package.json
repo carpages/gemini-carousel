@@ -1,12 +1,15 @@
 {
   "name": "gemini-carousel",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Gemini Carousel",
   "author": {
     "name": "Matt Rose",
     "email": "matt@mattrose.ca",
     "url": "http://mattrose.ca"
   },
+  "contributors": [
+    "Jeff Andrews <jeff.andrews@carpages.ca>"
+  ],
   "main": "gemini.carousel.js",
   "repository": {
     "type": "git",
