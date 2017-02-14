@@ -21,7 +21,7 @@
     "gemini-respond": "~0",
     "gemini-touch": "~0",
     "gemini-css": "~1",
-    "handlebars": "~3.0.3"
+    "handlebars": "~4.0.5"
   },
   "devDependencies": {
     "eslint": "^3.8.1",
