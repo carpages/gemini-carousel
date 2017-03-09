@@ -135,6 +135,14 @@ define([
       onChange: false,
 
       /**
+       * Optionally disable touch support
+       * @name gemini.carousel#touchEnabled
+       * @type boolean
+       * @default true
+       */
+      touchEnabled: true,
+
+      /**
        * Precompiled Handlebar templates to replace default. Expecting 'nav' for
        * default navigation.
        * @name gemini.carousel#templates
@@ -203,7 +211,7 @@ define([
       }
 
       // Touch Support
-      if($.support.touch) {
+      if(P.settings.touchEnabled && $.support.touch) {
         P.settings.animate = true;
         P._initTouch();
       }
