@@ -16,12 +16,12 @@
     "url": "https://github.com/carpages/gemini-carousel"
   },
   "dependencies": {
-    "gemini-loader": "~0",
+    "gemini-css": "~1",
     "gemini-fold": "~0",
+    "gemini-loader": "~0",
     "gemini-respond": "~0",
     "gemini-touch": "~0",
-    "gemini-css": "~1",
-    "handlebars": "~3.0.3"
+    "handlebars": "~4.0.5"
   },
   "devDependencies": {
     "compass-importer": "^0.4.1",
@@ -29,7 +29,7 @@
     "eslint-config-carpages": "^0.2.0",
     "grunt": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",
-    "grunt-contrib-handlebars": "carpages/grunt-contrib-handlebars",
+    "grunt-contrib-handlebars": "carpages/grunt-contrib-handlebars#master",
     "grunt-contrib-qunit": "^1.3.0",
     "grunt-eslint": "^19.0.0",
     "grunt-sass": "^2.0.0",
