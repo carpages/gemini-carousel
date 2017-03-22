@@ -494,10 +494,10 @@ You can see this in the example
         // Add touch events
         P.$carouselList.hammer({
           dragBlockHorizontal: true,
-          dragLockToAxis:      true,
+          dragLockToAxis: true,
           dragLockMinDistance: 20,
-          hold:                false,
-          tap:                 false
+          hold: false,
+          tap: false
         }).on( 'release dragleft dragright', function( ev ) {
           switch ( ev.type ) {
             case 'dragright':
