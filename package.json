@@ -25,11 +25,7 @@
   },
   "devDependencies": {
     "eslint": "^3.8.1",
-    "eslint-config-semistandard": "^7.0.0",
-    "eslint-config-standard": "^6.2.0",
-    "eslint-plugin-promise": "^3.3.0",
-    "eslint-plugin-requirejs": "^3.0.0",
-    "eslint-plugin-standard": "^2.0.1",
+    "eslint-config-carpages": "^0.2.0",
     "grunt": "~0.4.2",
     "grunt-contrib-connect": "~0.5.0",
     "grunt-contrib-qunit": "~0.5.2",
