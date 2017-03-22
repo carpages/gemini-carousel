@@ -4,3 +4,4 @@ bower_components
 .sass-cache
 _build
 *.css
+yarn.lock
