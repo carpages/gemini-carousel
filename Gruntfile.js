@@ -37,10 +37,17 @@ module.exports = function( grunt ) {
     qunit: {
       all: {
         options: {
+          inject: [
+            './test/qunit.config.js',
+            './node_modules/grunt-contrib-qunit/phantomjs/bridge.js'
+          ],
           timeout: 10000,
-          urls: [ 'http://localhost:9000/test/<%= pkg.name %>.html' ],
+          urls: [ 'http://localhost:9000/test/<%= pkg.name %>.test.html' ],
           page: {
-            viewportSize: { width: 10000, height: 10000 }
+            viewportSize: {
+              width: 10000,
+              height: 10000
+            }
           }
         }
       }
@@ -55,6 +62,7 @@ module.exports = function( grunt ) {
       server: {
         options: {
           hostname: '*',
+          base: '.',
           port: 9000
         }
       }
@@ -76,7 +84,7 @@ module.exports = function( grunt ) {
     'saucelabs-qunit': {
       all: {
         options: {
-          urls: [ 'http://localhost:9000/test/<%= pkg.name %>.html' ],
+          urls: [ 'http://localhost:9000/test/<%= pkg.name %>.test.html' ],
           build: process.env.TRAVIS_JOB_ID,
           browsers: [
             // iOS
@@ -166,6 +174,7 @@ module.exports = function( grunt ) {
   });
 
   // Default task.
-  grunt.registerTask( 'default', [ 'sass', 'eslint', 'connect', 'qunit' ]);
-  grunt.registerTask( 'ci', [ 'default'/*, 'saucelabs-qunit' */ ]);
+  grunt.registerTask( 'default', [ 'sass', 'eslint', 'test' ]);
+  grunt.registerTask( 'test', [ 'connect', 'qunit' ]);
+  grunt.registerTask( 'ci', [ 'default' ]);
 };

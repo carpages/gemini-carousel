@@ -17,10 +17,10 @@
     "gemini-respond": "~0",
     "gemini-touch": "~0",
     "gemini-css": "~1",
-    "handlebars": "~4.0.5"
+    "handlebars": "~4"
   },
   "devDependencies": {
-    "requirejs": "~2.1.11",
-    "qunit": "~1.18.0"
+    "requirejs": "~2",
+    "qunit": "~2"
   }
 }
