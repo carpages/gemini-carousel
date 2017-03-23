@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v1.1.1
+
+  - Update changelog
+
+## v1.1.0
+
+  - Update Handlebars to v4
+  - Fix loading of QUnit ( via PhantomJS ) in unit tests
+
 ## v1.0.7
 
   - Add a public update method
