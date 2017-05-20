@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.1.2
+
+  - Deprecate PlaceTim urls for testing
+  - Bump Gemini dependency versions
+    - gemini-touch - Bump HammerJS -> 2.0
+
 ## v1.1.1
 
   - Update changelog
