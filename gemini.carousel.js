@@ -394,6 +394,12 @@ define([
 
       if(animate===undefined) animate = P.settings.animate;
 
+      // When there is one item in the carousel list, pageCount = 0,
+      // so we need to early exit to avoid an infinite loop
+      if ( P.pageCount < 1 ) {
+        return;
+      }
+
       if(page > P.pageCount) {
         if (P.settings.loop) P.gotoPage(1);
         return;
