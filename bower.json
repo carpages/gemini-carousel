@@ -12,10 +12,10 @@
     "templates"
   ],
   "dependencies": {
-    "gemini-loader": "~0.3",
-    "gemini-fold": "~0",
-    "gemini-respond": "~0",
-    "gemini-touch": "~0",
-    "gemini-support": "~0"
+    "gemini-loader": "0.3.x",
+    "gemini-fold": "0.1.x",
+    "gemini-respond": "0.1.x",
+    "gemini-touch": "0.2.x",
+    "gemini-support": "0.1.x"
   }
 }
