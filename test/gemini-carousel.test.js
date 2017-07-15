@@ -81,11 +81,14 @@ require([ 'qunit', 'gemini', 'gemini.carousel' ], function( QUnit, G ) {
     El.left = $el.offset().left;
     El.right = El.left + $el.width();
 
-    return (( El.bottom <= Container.bottom ) && ( El.top >= Container.top )) &&
-           (( El.right <= Container.right ) && ( El.left >= Container.left )) &&
-           $el.width() > 0 &&
-           $el.height() > 0 &&
-           ( parseFloat( $el.css( 'opacity' )) > 0 );
+    return (
+      El.bottom <= Container.bottom &&
+      El.top >= Container.top &&
+      ( El.right <= Container.right && El.left >= Container.left ) &&
+      $el.width() > 0 &&
+      $el.height() > 0 &&
+      parseFloat( $el.css( 'opacity' )) > 0
+    );
   }
 
   /**
@@ -165,15 +168,15 @@ require([ 'qunit', 'gemini', 'gemini.carousel' ], function( QUnit, G ) {
 
     t.$el.carousel();
 
-    assert.ok(
-      Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1
-    );
+    assert.ok( Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1 );
 
     t.$el.carousel( 'next' );
 
     setTimeout( function() {
       assert.ok(
-        Math.abs( t.$el.offset().left - t.$list.find( 'li:nth-child(2)' ).offset().left ) < 1
+        Math.abs(
+          t.$el.offset().left - t.$list.find( 'li:nth-child(2)' ).offset().left
+        ) < 1
       );
       done();
     }, 500 );
@@ -191,16 +194,16 @@ require([ 'qunit', 'gemini', 'gemini.carousel' ], function( QUnit, G ) {
 
     setTimeout( function() {
       assert.ok(
-        Math.abs( t.$el.offset().left - t.$list.find( 'li:nth-child(2)' ).offset().left ) < 1
+        Math.abs(
+          t.$el.offset().left - t.$list.find( 'li:nth-child(2)' ).offset().left
+        ) < 1
       );
       done();
 
       t.$el.carousel( 'previous' );
 
       setTimeout( function() {
-        assert.ok(
-          Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1
-        );
+        assert.ok( Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1 );
         done2();
       }, 500 );
     }, 500 );
@@ -213,16 +216,12 @@ require([ 'qunit', 'gemini', 'gemini.carousel' ], function( QUnit, G ) {
 
     t.$el.carousel();
 
-    assert.ok(
-      Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1
-    );
+    assert.ok( Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1 );
 
     t.$el.carousel( 'previous' );
 
     setTimeout( function() {
-      assert.ok(
-        Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1
-      );
+      assert.ok( Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1 );
       done();
     }, 500 );
   });
@@ -236,16 +235,12 @@ require([ 'qunit', 'gemini', 'gemini.carousel' ], function( QUnit, G ) {
     t.$el.carousel();
     t.$el.carousel( 'gotoPage', t.$list.find( 'li' ).length, false );
 
-    assert.ok(
-      Math.abs( t.$el.offset().left - $last.offset().left ) < 1
-    );
+    assert.ok( Math.abs( t.$el.offset().left - $last.offset().left ) < 1 );
 
     t.$el.carousel( 'next' );
 
     setTimeout( function() {
-      assert.ok(
-        Math.abs( t.$el.offset().left - $last.offset().left ) < 1
-      );
+      assert.ok( Math.abs( t.$el.offset().left - $last.offset().left ) < 1 );
       done();
     }, 500 );
   });
@@ -257,15 +252,15 @@ require([ 'qunit', 'gemini', 'gemini.carousel' ], function( QUnit, G ) {
 
     t.$el.carousel();
 
-    assert.ok(
-      Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1
-    );
+    assert.ok( Math.abs( t.$el.offset().left - t.$first.offset().left ) < 1 );
 
     t.$el.find( '#js-button-2' ).trigger( 'click' );
 
     setTimeout( function() {
       assert.ok(
-        Math.abs( t.$el.offset().left - t.$list.find( 'li:nth-child(2)' ).offset().left ) < 1
+        Math.abs(
+          t.$el.offset().left - t.$list.find( 'li:nth-child(2)' ).offset().left
+        ) < 1
       );
       done();
     }, 500 );

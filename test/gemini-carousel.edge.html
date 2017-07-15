@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gemini Tooltip Edge Test</title>
 
   <link rel="stylesheet" href="gemini-carousel.test.css" media="screen">
@@ -9,22 +11,28 @@
     body {
       padding: 1em;
     }
+
     .box {
       display: inline-block;
       padding: 0.75em;
       background: rgba(0, 0, 0, 0.2);
       margin-bottom: 1em;
     }
+
     .box--medium {
       padding: 1.5em;
     }
+
     .box--large {
       padding: 2.5em;
     }
   </style>
 
-  <script>window.G={D:{_qj:[]}};G.Q=function(k){G.D._qj.push(k)};//0.1.0</script>
+  <script>
+    window.G = { D: { _qj: [] } }; G.Q = function (k) { G.D._qj.push(k) };//0.1.0
+  </script>
 </head>
+
 <body>
 
   <div class="carousel">
@@ -166,4 +174,5 @@
   <!-- Load JS. -->
   <script data-main="gemini-carousel.edge" src="../bower_components/requirejs/require.js"></script>
 </body>
+
 </html>

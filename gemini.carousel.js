@@ -59,29 +59,33 @@ You can see this in the example
 ( function( factory ) {
   if ( typeof define === 'function' && define.amd ) {
     // AMD. Register as an anonymous module.
-    define([
-      'gemini',
-      'gemini.carousel.templates',
-      'gemini.fold',
-      'gemini.respond'
-    ], factory );
+    define(
+      [
+        'gemini',
+        'gemini.carousel.templates',
+        'gemini.fold',
+        'gemini.respond',
+        'gemini.touch'
+      ],
+      factory
+    );
   } else if ( typeof exports === 'object' ) {
     // Node/CommonJS
     module.exports = factory(
       require( 'gemini-loader' ),
       require( './templates.js' ),
       require( 'gemini-fold' ),
-      require( 'gemini-respond' )
+      require( 'gemini-respond' ),
+      require( 'gemini-touch' )
     );
   } else {
     // Browser globals
     factory( G, Templates.carousel );
   }
-}( function( $, T ) {
-  var _ = $._;
+})( function( G, T ) {
+  var _ = G._;
 
-  $.boiler( 'carousel', {
-
+  G.boiler( 'carousel', {
     defaults: {
       /**
        * Whether to append pagination to the the carousel.
@@ -169,7 +173,7 @@ You can see this in the example
       var P = this;
 
       // Extend the templates
-      P.T = $.extend( T, P.settings.templates );
+      P.T = G.extend( T, P.settings.templates );
 
       // Init variables
       P.currentItem = P.currentPage = 1;
@@ -181,10 +185,12 @@ You can see this in the example
 
       P.$carouselLists = P.$el.find( '.carousel__list' );
       P.carouselList = P.$carouselLists[P.settings.indexList];
-      P.$carouselList = $( P.carouselList );
+      P.$carouselList = G( P.carouselList );
       P.$currentPage = P.$el.find( '[data-goto="1"]' );
       P.$next = P.$el.find( '[data-goto="next"],[data-goto="++"]' );
-      P.$previous = P.$el.find( '[data-goto="prev"],[data-goto="previous"],[data-goto="--"]' );
+      P.$previous = P.$el.find(
+        '[data-goto="prev"],[data-goto="previous"],[data-goto="--"]'
+      );
 
       // Change next/prev button active states
       if ( !P._isNext()) {
@@ -202,7 +208,7 @@ You can see this in the example
       P._update();
 
       // Update on resize
-      $.respond.bind( 'resize', function( e, scrn ) {
+      G.respond.bind( 'resize', function( e, scrn ) {
         P._update();
         P.gotoPage( P.currentPage, false );
       });
@@ -211,7 +217,7 @@ You can see this in the example
       if ( P.settings.thumbs ) {
         P.$thumbs = P.$el.find( '.carousel__thumbs' );
         P.$thumbs.find( 'a' ).each( function( i ) {
-          $( this ).click( function( e ) {
+          G( this ).click( function( e ) {
             e.preventDefault();
             P.gotoPage( i + 1 );
           });
@@ -219,7 +225,7 @@ You can see this in the example
       }
 
       // Touch Support
-      if ( $.support.touch ) {
+      if ( G.support.touch ) {
         P.settings.animate = true;
         P._initTouch();
       }
@@ -269,13 +275,13 @@ You can see this in the example
 
       // Template
       P.pagination = P.T.nav({
-        'pageCount': P.pageCount
+        pageCount: P.pageCount
       });
 
       // Render
       if ( !P.$pagination ) {
         // First load
-        P.$pagination = $( '<span/>' ).append( P.pagination );
+        P.$pagination = G( '<span/>' ).append( P.pagination );
         P.$el.append( P.$pagination );
       } else {
         // Replace exisiting
@@ -296,7 +302,7 @@ You can see this in the example
      */
     _handleClick: function( e, target ) {
       var P = this;
-      var goTo = $( target ).data( 'goto' );
+      var goTo = G( target ).data( 'goto' );
 
       if ( !goTo ) {
         return;
@@ -387,17 +393,16 @@ You can see this in the example
 
       // Calculate the x offset in pixels
       var $item = P.$carouselList.children( 'li:nth-child(' + item + ')' );
-      var xOffset = $item.offset().left -
-                    P.$carouselList.offset().left +
-                    P.carouselList.scrollLeft;
+      var xOffset =
+        $item.offset().left -
+        P.$carouselList.offset().left +
+        P.carouselList.scrollLeft;
 
       // Whether there are more items to scroll to
-      var isMoreItems = $.rightoffold(
-        P.$carouselList.find( 'li' ).last(), {
-          container: P.$carouselList,
-          threshold: -P.itemWidth - 20
-        }
-      );
+      var isMoreItems = G.rightoffold( P.$carouselList.find( 'li' ).last(), {
+        container: P.$carouselList,
+        threshold: -P.itemWidth - 20
+      });
 
       // Make sure there's something to scroll to
       if (( item > P.currentItem && !isMoreItems ) || xOffset < 0 ) {
@@ -407,16 +412,19 @@ You can see this in the example
       // Change the item
       P.currentItem = item;
       if ( animate ) {
-        P.$carouselLists.animate({
-          scrollLeft: xOffset
-        }, P.settings.scrollSpeed );
+        P.$carouselLists.animate(
+          {
+            scrollLeft: xOffset
+          },
+          P.settings.scrollSpeed
+        );
       } else {
         P.$carouselLists.scrollLeft( xOffset );
       }
 
       setTimeout(
         _.bind( function() {
-          $( this ).trigger( 'scroll' );
+          G( this ).trigger( 'scroll' );
           if ( P.settings.onChange ) P.settings.onChange.call( P );
         }, P.$carousel ),
         animate ? P.settings.scrollSpeed : 0
@@ -480,25 +488,16 @@ You can see this in the example
     _initTouch: function() {
       var P = this;
 
-      ( function( factory ) {
-        if ( typeof define === 'function' && define.amd ) {
-          define([ 'gemini.touch' ], factory );
-        } else if ( typeof exports === 'object' ) {
-          module.exports = factory(
-            require( 'gemini-touch' )
-          );
-        } else {
-          factory();
-        }
-      }( function() {
-        // Add touch events
-        P.$carouselList.hammer({
+      // Add touch events
+      P.$carouselList
+        .hammer({
           dragBlockHorizontal: true,
           dragLockToAxis: true,
           dragLockMinDistance: 20,
           hold: false,
           tap: false
-        }).on( 'release dragleft dragright', function( ev ) {
+        })
+        .on( 'release dragleft dragright', function( ev ) {
           switch ( ev.type ) {
             case 'dragright':
             case 'dragleft':
@@ -509,7 +508,8 @@ You can see this in the example
               // slow down at the first and last pane
               if (
                 ( P.currentPage === 1 && ev.gesture.direction === 'right' ) ||
-                ( P.currentPage === P.pageCount && ev.gesture.direction === 'left' )
+                ( P.currentPage === P.pageCount &&
+                  ev.gesture.direction === 'left' )
               ) {
                 dragOffset *= 0.4;
               }
@@ -525,7 +525,7 @@ You can see this in the example
                 } else if ( ev.gesture.interimDirection === 'right' ) {
                   P.previous();
                 }
-              // snap carousel base on positioning of page
+                // snap carousel base on positioning of page
               } else {
                 // more then 50% moved, navigate
                 if ( Math.abs( ev.gesture.deltaX ) > P.pageWidth / 2 ) {
@@ -541,12 +541,10 @@ You can see this in the example
               break;
           }
         });
-      }));
     }
-
   });
 
   // Return the jquery object
   // This way you don't need to require both jquery and the plugin
   return $;
-}));
+});

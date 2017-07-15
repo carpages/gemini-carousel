@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Gemini Carousel Test</title>
 
-    <!-- Load CSS. -->
-    <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" media="screen">
-    <link rel="stylesheet" href="gemini-carousel.test.css" media="screen">
+<head>
+  <meta charset="utf-8">
+  <title>Gemini Carousel Test</title>
 
-    <!-- Load RequireJS. -->
-    <script src="../bower_components/requirejs/require.js"></script>
+  <!-- Load CSS. -->
+  <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" media="screen">
+  <link rel="stylesheet" href="gemini-carousel.test.css" media="screen">
 
-    <!-- Load tests. -->
-    <script src="qunit.config.js"></script>
-    <script src="gemini-carousel.test.js"></script>
+  <!-- Load RequireJS. -->
+  <script src="../bower_components/requirejs/require.js"></script>
 
-    <script>window.G={D:{_qj:[]}};G.Q=function(k){G.D._qj.push(k)};//0.1.0</script>
-  </head>
+  <!-- Load tests. -->
+  <script src="qunit.config.js"></script>
+  <script src="gemini-carousel.test.js"></script>
 
-  <body>
-    <div id="qunit"></div>
+  <script>
+    window.G = { D: { _qj: [] } }; G.Q = function (k) { G.D._qj.push(k) };//0.1.0
+  </script>
+</head>
 
-    <div id="js-fixtures">
-      <div id="js-fixture-1" class="carousel">
-        <ul class="carousel__list">
-          <li>
-            <h3>Item 1</h3>
-            <img src="http://unsplash.it/200/100/">
-          </li>
-          <li>
-            <h3>Item 2</h3>
-            <img src="http://unsplash.it/200/100/">
-          </li>
-          <li>
-            <h3>Item 3</h3>
-            <img src="http://unsplash.it/200/100/">
-          </li>
-          <li>
-            <h3>Item 4</h3>
-            <img src="http://unsplash.it/200/100/">
-          </li>
-          <li>
-            <h3>Item 5</h3>
-            <img src="http://unsplash.it/200/100/">
-          </li>
-        </ul>
+<body>
+  <div id="qunit"></div>
 
-        <button id="js-button-1" data-goto="--">Previous</button>
-        <button id="js-button-2" data-goto="++">Next</button>
-      </div>
+  <div id="js-fixtures">
+    <div id="js-fixture-1" class="carousel">
+      <ul class="carousel__list">
+        <li>
+          <h3>Item 1</h3>
+          <img src="http://unsplash.it/200/100/">
+        </li>
+        <li>
+          <h3>Item 2</h3>
+          <img src="http://unsplash.it/200/100/">
+        </li>
+        <li>
+          <h3>Item 3</h3>
+          <img src="http://unsplash.it/200/100/">
+        </li>
+        <li>
+          <h3>Item 4</h3>
+          <img src="http://unsplash.it/200/100/">
+        </li>
+        <li>
+          <h3>Item 5</h3>
+          <img src="http://unsplash.it/200/100/">
+        </li>
+      </ul>
+
+      <button id="js-button-1" data-goto="--">Previous</button>
+      <button id="js-button-2" data-goto="++">Next</button>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
