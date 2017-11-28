@@ -390,7 +390,7 @@ define([
         if (P.settings.loop) P.gotoPage(1);
         return;
       } else if (page < 1) {
-        if (P.settings.loop) P.gotoPage(P.pageCount - 1);
+        if (P.settings.loop) P.gotoPage(P.pageCount);
         return;
       }
 
