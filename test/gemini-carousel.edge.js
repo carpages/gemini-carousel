@@ -9,10 +9,14 @@ require.config({
     'gemini.fold': 'bower_components/gemini-fold/gemini.fold',
     'gemini.respond': 'bower_components/gemini-respond/gemini.respond',
     'gemini.support': 'bower_components/gemini-support/gemini.support',
+    'gemini.touch': 'bower_components/gemini-touch/gemini.touch',
+    fastclick: 'bower_components/fastclick/lib/fastclick',
+    'jquery.hammer': 'bower_components/jquery-hammerjs/jquery.hammer',
+    hammerjs: 'bower_components/hammerjs/hammer',
     'gemini.carousel.templates': 'templates'
   }
 });
 
 require([ 'gemini', 'gemini.carousel' ], function( G ) {
-  $( '.carousel' ).carousel();
+  G( '.carousel' ).carousel();
 });

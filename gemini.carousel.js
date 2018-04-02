@@ -488,6 +488,50 @@ You can see this in the example
     _initTouch: function() {
       var P = this;
 
+      function panHandler( ev ) {
+        switch ( ev.type ) {
+          case 'panright':
+          case 'panleft':
+            // stick to the finger
+            var pageOffset = ( P.currentPage - 1 ) * P.pageWidth;
+            var dragOffset = -ev.gesture.deltaX;
+
+            // slow down at the first and last pane
+            if (
+              ( P.currentPage === 1 && ev.gesture.direction === 'right' ) ||
+              ( P.currentPage === P.pageCount && ev.gesture.direction === 'left' )
+            ) {
+              dragOffset *= 0.4;
+            }
+
+            P.$carouselLists.scrollLeft( pageOffset + dragOffset );
+            break;
+
+          case 'panend':
+            // check if their finger is moving fast
+            if ( ev.gesture.velocityX > 0.05 ) {
+              if ( ev.gesture.interimDirection === 'left' ) {
+                P.next();
+              } else if ( ev.gesture.interimDirection === 'right' ) {
+                P.previous();
+              }
+              // snap carousel base on positioning of page
+            } else {
+              // more then 50% moved, navigate
+              if ( Math.abs( ev.gesture.deltaX ) > P.pageWidth / 2 ) {
+                if ( ev.gesture.direction === 'right' ) {
+                  P.previous();
+                } else {
+                  P.next();
+                }
+              } else {
+                P.gotoPage( P.currentPage );
+              }
+            }
+            break;
+        }
+      }
+
       // Add touch events
       P.$carouselList
         .hammer({
@@ -497,50 +541,7 @@ You can see this in the example
           hold: false,
           tap: false
         })
-        .on( 'release dragleft dragright', function( ev ) {
-          switch ( ev.type ) {
-            case 'dragright':
-            case 'dragleft':
-              // stick to the finger
-              var pageOffset = ( P.currentPage - 1 ) * P.pageWidth;
-              var dragOffset = -ev.gesture.deltaX;
-
-              // slow down at the first and last pane
-              if (
-                ( P.currentPage === 1 && ev.gesture.direction === 'right' ) ||
-                ( P.currentPage === P.pageCount &&
-                  ev.gesture.direction === 'left' )
-              ) {
-                dragOffset *= 0.4;
-              }
-
-              P.$carouselLists.scrollLeft( pageOffset + dragOffset );
-              break;
-
-            case 'release':
-              // check if their finger is moving fast
-              if ( ev.gesture.velocityX > 0.05 ) {
-                if ( ev.gesture.interimDirection === 'left' ) {
-                  P.next();
-                } else if ( ev.gesture.interimDirection === 'right' ) {
-                  P.previous();
-                }
-                // snap carousel base on positioning of page
-              } else {
-                // more then 50% moved, navigate
-                if ( Math.abs( ev.gesture.deltaX ) > P.pageWidth / 2 ) {
-                  if ( ev.gesture.direction === 'right' ) {
-                    P.previous();
-                  } else {
-                    P.next();
-                  }
-                } else {
-                  P.gotoPage( P.currentPage );
-                }
-              }
-              break;
-          }
-        });
+        .bind( 'panend panleft panright', panHandler );
     }
   });
 
