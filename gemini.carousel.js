@@ -464,7 +464,7 @@ You can see this in the example
         animate = P.settings.animate;
       }
 
-      if ( P.allItemsShown || page > P.pageCount ) {
+      if (( P.allItemsShown && P.settings.loop ) || page > P.pageCount ) {
         if ( P.settings.loop ) {
           P.allItemsShown = false;
           P.gotoPage( 1 );
