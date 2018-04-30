@@ -337,7 +337,11 @@ You can see this in the example
      * @return {boolean} Whether the next page exists
      */
     _isNext: function() {
-      return this.settings.loop || this.currentPage !== this.pageCount;
+      return (
+        this.settings.loop ||
+        this.allItemsShown ||
+        this.currentPage !== this.pageCount
+      );
     },
 
     /**
