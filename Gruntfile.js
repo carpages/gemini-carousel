@@ -26,7 +26,10 @@ module.exports = function( grunt ) {
           umd: true,
           namespace: 'Templates.Default.Carousel',
           processName: function( filename ) {
-            return filename.split( '/' ).pop().replace( '.hbs', '' );
+            return filename
+              .split( '/' )
+              .pop()
+              .replace( '.hbs', '' );
           }
         },
         files: [
@@ -57,7 +60,7 @@ module.exports = function( grunt ) {
     },
     eslint: {
       options: {
-        configFile: '.eslintrc'
+        configFile: '.eslintrc.js'
       },
       target: [ 'gemini.carousel.js' ]
     },
@@ -171,6 +174,15 @@ module.exports = function( grunt ) {
               version: '29'
             }
           ]
+        }
+      }
+    },
+    watch: {
+      sass: {
+        files: [ '**/*.scss' ],
+        tasks: [ 'sass:dist' ],
+        options: {
+          interrupt: true
         }
       }
     }

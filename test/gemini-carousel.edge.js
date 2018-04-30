@@ -18,5 +18,8 @@ require.config({
 });
 
 require([ 'gemini', 'gemini.carousel' ], function( G ) {
-  G( '.carousel' ).carousel();
+  G( '.carousel' ).carousel({
+    incrementByOne: true,
+    loop: true
+  });
 });
