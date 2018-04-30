@@ -50,6 +50,7 @@ $margin: get(spacing) / 2;
 
   > li {
     display: block;
+    min-width: 100%;
   }
 }
 
