@@ -25,41 +25,48 @@
       </ul>
     </div>
  */
-[class*="carousel"] {
+[class*='carousel'] {
   position: relative;
 }
 
-  /**
-   * @submodule Carousel List [.carousel__list]
-   * @description The list of content for the carousel. You can add as many
-   * items to the list, and the carousel will automatically respond and
-   * adjust.
-   */
-  .carousel__list {
-    @include gpu;
-    @include clearfix;
-    @include prune-list;
-    position: relative;
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
+/**
+  * @submodule Carousel List [.carousel__list]
+  * @description The list of content for the carousel. You can add as many
+  * items to the list, and the carousel will automatically respond and
+  * adjust.
+  */
+$margin: get(spacing) / 2;
 
-    > li{
-      width: 100%;
-      display: inline-block;
-      vertical-align: top;
-    }
+.carousel__list {
+  @include gpu;
+  @include clearfix;
+  @include prune-list;
+
+  position: relative;
+  display: flex;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+
+  > li {
+    display: block;
   }
+}
 
-  @for $display from 2 through 5 {
-
-    .carousel--#{$display} .carousel__list > li {
-      @include media(medium) {
-        width: 100% * 0.5;
-      }
-      @include media(large) {
-        width: 100% / $display;
-      }
+@for $display from 2 through 5 {
+  .carousel--#{$display} .carousel__list > li {
+    @include media(medium) {
+      min-width: 100%;
     }
 
+    @include media(large) {
+      min-width: calc(
+        100% / #{$display} - #{($margin * ($display - 1)) / $display}
+      );
+    }
+
+    &:not(:last-child) {
+      margin-right: $margin;
+    }
   }
+}

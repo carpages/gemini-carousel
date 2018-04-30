@@ -1,3 +1,6 @@
 module.exports = {
-  extends: "carpages"
+  extends: 'carpages',
+  env: {
+    amd: true
+  }
 };

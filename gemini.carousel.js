@@ -59,16 +59,13 @@ You can see this in the example
 ( function( factory ) {
   if ( typeof define === 'function' && define.amd ) {
     // AMD. Register as an anonymous module.
-    define(
-      [
-        'gemini',
-        'gemini.carousel.templates',
-        'gemini.fold',
-        'gemini.respond',
-        'gemini.touch'
-      ],
-      factory
-    );
+    define([
+      'gemini',
+      'gemini.carousel.templates',
+      'gemini.fold',
+      'gemini.respond',
+      'gemini.touch'
+    ], factory );
   } else if ( typeof exports === 'object' ) {
     // Node/CommonJS
     module.exports = factory(
@@ -94,6 +91,14 @@ You can see this in the example
        * @default false
        */
       pagination: false,
+
+      /**
+       * Set to true to increment by one item regardless of how many are visible.
+       * @name gemini.carousel#incrementByOne
+       * @type Boolean
+       * @default false
+       */
+      incrementByOne: false,
 
       /**
        * Whether to do a scroll animation when clicked
@@ -123,7 +128,7 @@ You can see this in the example
        * Specify which iteration of the .carousel__list you'd like to index for
        * the carousel.
        * @name gemini.carousel#indexList
-       * @type Interger
+       * @type Integer
        * @default 0
        */
       indexList: 0,
@@ -243,7 +248,9 @@ You can see this in the example
       // Update Cache
       P.pageWidth = P.$carouselList.width();
       P.itemWidth = P.$carouselList.children( 'li:first-child' ).width();
-      P.itemsPerPage = Math.round( P.pageWidth / P.itemWidth );
+
+      P._itemsPerPage = Math.round( P.pageWidth / P.itemWidth );
+      P.itemsPerPage = P.settings.incrementByOne ? 1 : P._itemsPerPage;
 
       P.itemCount = P.$carouselList.children( 'li' ).length;
       P.pageCount = Math.ceil( P.itemCount / P.itemsPerPage );
@@ -327,7 +334,7 @@ You can see this in the example
      * @name gemini.carousel#_isNext
      * @private
      * @function
-     * @return {boolean} Weather the next page exists
+     * @return {boolean} Whether the next page exists
      */
     _isNext: function() {
       return this.settings.loop || this.currentPage !== this.pageCount;
@@ -338,7 +345,7 @@ You can see this in the example
      * @name gemini.carousel#_isPrevious
      * @private
      * @function
-     * @return {boolean} Weather the previous page exists
+     * @return {boolean} Whether the previous page exists
      */
     _isPrevious: function() {
       return this.settings.loop || this.currentPage !== 1;
@@ -399,10 +406,22 @@ You can see this in the example
         P.carouselList.scrollLeft;
 
       // Whether there are more items to scroll to
+      var THRESHOLD = -P.itemWidth * P._itemsPerPage;
       var isMoreItems = G.rightoffold( P.$carouselList.find( 'li' ).last(), {
         container: P.$carouselList,
-        threshold: -P.itemWidth - 20
+        threshold: THRESHOLD
       });
+
+      console.log( P.currentItem );
+
+      console.log( THRESHOLD );
+      console.log(
+        P.$carouselList[0].getBoundingClientRect().x -
+          P.$carouselList
+            .find( 'li' )
+            .last()[0]
+            .getBoundingClientRect().x
+      );
 
       // Make sure there's something to scroll to
       if (( item > P.currentItem && !isMoreItems ) || xOffset < 0 ) {
@@ -411,6 +430,11 @@ You can see this in the example
 
       // Change the item
       P.currentItem = item;
+
+      P.allItemsShown =
+        P.currentItem - 1 === P.itemCount - ( P._itemsPerPage - 1 );
+      console.log({ allItemsShown: P.allItemsShown });
+
       if ( animate ) {
         P.$carouselLists.animate(
           {
@@ -444,8 +468,11 @@ You can see this in the example
         animate = P.settings.animate;
       }
 
-      if ( page > P.pageCount ) {
-        if ( P.settings.loop ) P.gotoPage( 1 );
+      if ( P.allItemsShown || page > P.pageCount ) {
+        if ( P.settings.loop ) {
+          P.allItemsShown = false;
+          P.gotoPage( 1 );
+        }
         return;
       } else if ( page < 1 ) {
         if ( P.settings.loop ) P.gotoPage( P.pageCount );

@@ -9,14 +9,18 @@
   <link rel="stylesheet" href="gemini-carousel.test.css" media="screen">
   <style>
     body {
+      width: 100%;
+      max-width: 60em;
       padding: 1em;
+      margin: 0 auto;
+      background-color: #F8F8F9;
     }
 
     .box {
       display: inline-block;
       padding: 0.75em;
-      background: rgba(0, 0, 0, 0.2);
       margin-bottom: 1em;
+      background: rgba(0, 0, 0, 0.2);
     }
 
     .box--medium {
@@ -25,6 +29,40 @@
 
     .box--large {
       padding: 2.5em;
+    }
+
+    .carousel__card {
+      text-align: center;
+      background-color: #EEE;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    .button-group {
+      display: flex;
+    }
+
+    .carousel button {
+      flex: 1;
+      background-color: #FFF;
+      border: none;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px -2px rgba(0, 0, 40, 0.3);
+      appearance: none;
+    }
+
+    .carousel button:hover {
+      background-color: #EEE;
+    }
+
+    .carousel button:not(:last-child) {
+      margin-right: 8px;
+    }
+
+    .carousel button:focus {
+      outline: none;
     }
   </style>
 
@@ -35,11 +73,15 @@
 
 <body>
 
-  <div class="carousel">
-    <ul class="carousel__list">
-      <li>
-        <h3>Item 1</h3>
-        <img src="http://unsplash.it/200/100/">
+  <header>
+    <h1>Gemini Carousel Test</h1>
+  </header>
+
+  <div class="push-bottom carousel carousel--5">
+    <ul class="carousel__list push-half-bottom">
+      <li class="carousel__card pad-half round">
+        <h3 class="push-none">Item 1</h3>
+        <img src="https://picsum.photos/2000/1000/?random">
       </li>
       <li>
         <h3>Item 2</h3>
@@ -57,16 +99,28 @@
         <h3>Item 5</h3>
         <img src="http://unsplash.it/200/100/">
       </li>
+      <li class="carousel__card pad-half round">
+        <h3 class="push-none">Item 6</h3>
+        <img src="https://picsum.photos/2000/1000/?random">
+      </li>
+      <li class="carousel__card pad-half round">
+        <h3 class="push-none">Item 7</h3>
+        <img src="https://picsum.photos/2000/1000/?random">
+      </li>
+      <li class="carousel__card pad-half round">
+        <h3 class="push-none">Item 8</h3>
+        <img src="https://picsum.photos/2000/1000/?random">
+      </li>
     </ul>
     <button data-goto="--">Previous</button>
     <button data-goto="++">Next</button>
   </div>
 
-  <div class="carousel carousel--2">
-    <ul class="carousel__list">
-      <li>
-        <h3>Item 1</h3>
-        <img src="http://unsplash.it/200/100/">
+  <!-- <div class="push-bottom carousel carousel--2">
+    <ul class="carousel__list push-half-bottom">
+      <li class="carousel__card pad-half round">
+        <h3 class="push-none">Item 1</h3>
+        <img src="https://picsum.photos/2000/1000/?random">
       </li>
       <li>
         <h3>Item 2</h3>
@@ -167,9 +221,11 @@
       </li>
     </ul>
 
-    <button data-goto="--">Previous</button>
-    <button data-goto="++">Next</button>
-  </div>
+    <div class="button-group">
+      <button data-goto="--">Previous</button>
+      <button data-goto="++">Next</button>
+    </div>
+  </div> -->
 
   <!-- Load JS. -->
   <script data-main="gemini-carousel.edge" src="../bower_components/requirejs/require.js"></script>
