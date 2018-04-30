@@ -27,6 +27,7 @@ You can see this in the example
  * @requires gemini.support
 
  * @prop {boolean} pagination {@link gemini.carousel#pagination}
+ * @prop {boolean} incrementByOne {@link gemini.carousel#incrementByOne}
  * @prop {boolean} loop {@link gemini.carousel#loop}
  * @prop {boolean} animate {@link gemini.carousel#animate}
  * @prop {string} container {@link gemini.carousel#container}
