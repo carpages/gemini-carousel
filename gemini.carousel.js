@@ -409,11 +409,12 @@ define([
 
       if ( animate === undefined ) animate = P.settings.animate;
 
-      if ( P.allItemsShown || page > P.pageCount ) {
+      if (( P.allItemsShown && P.settings.loop ) || page > P.pageCount ) {
         if ( P.settings.loop ) {
           P.allItemsShown = false;
           P.gotoPage( 1 );
         }
+
         return;
       } else if ( page < 1 ) {
         if ( P.settings.loop ) P.gotoPage( P.pageCount );
