@@ -232,7 +232,7 @@ define([
       P.itemWidth = P.$carouselList.children( 'li:first-child' ).width();
 
       P._itemsPerPage = Math.floor( P.pageWidth / P.itemWidth ) - 1;
-      P.itemsPerPage = P.settings.incrementByOne ? 1 : P._itemsPerPage;
+      P.itemsPerPage = P.settings.incrementByOne ? 1 : P._itemsPerPage + 1;
 
       P.itemCount = P.$carouselList.children( 'li' ).length;
       P.pageCount = Math.ceil( P.itemCount / P.itemsPerPage );
