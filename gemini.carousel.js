@@ -250,8 +250,8 @@ You can see this in the example
       P.pageWidth = P.$carouselList.width();
       P.itemWidth = P.$carouselList.children( 'li:first-child' ).width();
 
-      P._itemsPerPage = Math.floor( P.pageWidth / P.itemWidth ) - 1;
-      P.itemsPerPage = P.settings.incrementByOne ? 1 : P._itemsPerPage;
+      P._itemsPerPage = Math.round( P.pageWidth / P.itemWidth ) - 1;
+      P.itemsPerPage = P.settings.incrementByOne ? 1 : P._itemsPerPage + 1;
 
       P.itemCount = P.$carouselList.children( 'li' ).length;
       P.pageCount = Math.ceil( P.itemCount / P.itemsPerPage );
@@ -477,6 +477,13 @@ You can see this in the example
       }
 
       var item = P.itemsPerPage * ( page - 1 ) + 1;
+
+      console.log({
+        page,
+        itemsPerPage: P.itemsPerPage,
+        _itemsPerPage: P._itemsPerPage,
+        pageCount: P.pageCount
+      });
 
       P._gotoItem( item, animate );
 
