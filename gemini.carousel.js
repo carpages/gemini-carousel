@@ -249,7 +249,7 @@ You can see this in the example
       P.pageWidth = P.$carouselList.width();
       P.itemWidth = P.$carouselList.children( 'li:first-child' ).width();
 
-      P._itemsPerPage = Math.round( P.pageWidth / P.itemWidth );
+      P._itemsPerPage = Math.floor( P.pageWidth / P.itemWidth ) - 1;
       P.itemsPerPage = P.settings.incrementByOne ? 1 : P._itemsPerPage;
 
       P.itemCount = P.$carouselList.children( 'li' ).length;
@@ -337,11 +337,15 @@ You can see this in the example
      * @return {boolean} Whether the next page exists
      */
     _isNext: function() {
-      return (
-        this.settings.loop ||
-        this.allItemsShown ||
-        this.currentPage !== this.pageCount
-      );
+      var P = this;
+
+      if ( P.settings.loop ) return true;
+
+      if ( P.allItemsShown ) {
+        return P.currentPage <= P.pageCount - P._itemsPerPage;
+      }
+
+      return P.currentPage !== P.pageCount;
     },
 
     /**
@@ -424,8 +428,7 @@ You can see this in the example
       // Change the item
       P.currentItem = item;
 
-      P.allItemsShown =
-        P.currentItem - 1 === P.itemCount - ( P._itemsPerPage - 1 );
+      P.allItemsShown = P.currentItem - 1 === P.itemCount - P._itemsPerPage;
 
       if ( animate ) {
         P.$carouselLists.animate(
@@ -465,6 +468,7 @@ You can see this in the example
           P.allItemsShown = false;
           P.gotoPage( 1 );
         }
+
         return;
       } else if ( page < 1 ) {
         if ( P.settings.loop ) P.gotoPage( P.pageCount );
