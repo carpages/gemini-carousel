@@ -412,17 +412,6 @@ You can see this in the example
         threshold: THRESHOLD
       });
 
-      console.log( P.currentItem );
-
-      console.log( THRESHOLD );
-      console.log(
-        P.$carouselList[0].getBoundingClientRect().x -
-          P.$carouselList
-            .find( 'li' )
-            .last()[0]
-            .getBoundingClientRect().x
-      );
-
       // Make sure there's something to scroll to
       if (( item > P.currentItem && !isMoreItems ) || xOffset < 0 ) {
         return;
@@ -433,7 +422,6 @@ You can see this in the example
 
       P.allItemsShown =
         P.currentItem - 1 === P.itemCount - ( P._itemsPerPage - 1 );
-      console.log({ allItemsShown: P.allItemsShown });
 
       if ( animate ) {
         P.$carouselLists.animate(
