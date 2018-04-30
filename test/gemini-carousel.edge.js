@@ -19,7 +19,6 @@ require.config({
 
 require([ 'gemini', 'gemini.carousel' ], function( G ) {
   G( '.carousel' ).carousel({
-    incrementByOne: true,
-    loop: true
+    incrementByOne: true
   });
 });
