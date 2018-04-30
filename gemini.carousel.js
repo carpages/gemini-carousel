@@ -231,7 +231,7 @@ define([
       P.pageWidth = P.$carouselList.width();
       P.itemWidth = P.$carouselList.children( 'li:first-child' ).width();
 
-      P._itemsPerPage = Math.round( P.pageWidth / P.itemWidth );
+      P._itemsPerPage = Math.floor( P.pageWidth / P.itemWidth ) - 1;
       P.itemsPerPage = P.settings.incrementByOne ? 1 : P._itemsPerPage;
 
       P.itemCount = P.$carouselList.children( 'li' ).length;
@@ -304,11 +304,15 @@ define([
      * @return {boolean} Weather the next page exists
      */
     _isNext: function() {
-      return (
-        this.settings.loop ||
-        this.allItemsShown ||
-        this.currentPage != this.pageCount
-      );
+      var P = this;
+
+      if ( P.settings.loop ) return true;
+
+      if ( P.allItemsShown ) {
+        return P.currentPage <= P.pageCount - P._itemsPerPage;
+      }
+
+      return P.currentPage !== P.pageCount;
     },
 
     /**
@@ -372,8 +376,8 @@ define([
 
       // Change the item
       P.currentItem = item;
-      P.allItemsShown =
-        P.currentItem - 1 === P.itemCount - ( P._itemsPerPage - 1 );
+      P.allItemsShown = P.currentItem - 1 === P.itemCount - P._itemsPerPage;
+
       if ( animate ) {
         P.$carouselLists.animate(
           {
