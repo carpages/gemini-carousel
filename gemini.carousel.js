@@ -478,13 +478,6 @@ You can see this in the example
 
       var item = P.itemsPerPage * ( page - 1 ) + 1;
 
-      console.log({
-        page,
-        itemsPerPage: P.itemsPerPage,
-        _itemsPerPage: P._itemsPerPage,
-        pageCount: P.pageCount
-      });
-
       P._gotoItem( item, animate );
 
       // Change active page
