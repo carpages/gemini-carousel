@@ -1,6 +1,3 @@
 module.exports = {
-  extends: 'carpages',
-  env: {
-    amd: true
-  }
+  extends: 'carpages/rules/dsp'
 };
