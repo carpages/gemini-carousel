@@ -1,7 +1,5 @@
 'use strict';
 
-var compassImporter = require( 'compass-importer' );
-
 module.exports = function( grunt ) {
   // Load all grunt tasks
   require( 'load-grunt-tasks' )( grunt );
@@ -43,10 +41,7 @@ module.exports = function( grunt ) {
     qunit: {
       all: {
         options: {
-          inject: [
-            './test/qunit.config.js',
-            './node_modules/grunt-contrib-qunit/phantomjs/bridge.js'
-          ],
+          inject: [ './test/qunit.config.js', './node_modules/grunt-contrib-qunit/chrome/bridge.js' ],
           timeout: 10000,
           urls: [ 'http://localhost:9000/test/<%= pkg.name %>.test.html' ],
           page: {
@@ -59,9 +54,6 @@ module.exports = function( grunt ) {
       }
     },
     eslint: {
-      options: {
-        configFile: '.eslintrc.js'
-      },
       target: [ 'gemini.carousel.js' ]
     },
     connect: {
@@ -75,7 +67,8 @@ module.exports = function( grunt ) {
     },
     sass: {
       options: {
-        importer: compassImporter,
+        implementation: require( 'node-sass' ),
+        importer: require( 'compass-importer' ),
         includePaths: [ 'bower_components' ]
       },
       dist: {

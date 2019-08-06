@@ -1,26 +1,18 @@
 {
   "name": "gemini-carousel",
-  "authors": [
-    {"name": "Matt Rose", "email": "matt@mattrose.ca"}
-  ],
-  "main": [
-    "gemini.carousel.js",
-    "templates.js",
-    "sass/carousel.scss"
-  ],
-  "ignore": [
-    "templates"
-  ],
+  "authors": [{ "name": "Matt Rose", "email": "matt@mattrose.ca" }],
+  "main": ["gemini.carousel.js", "templates.js", "sass/carousel.scss"],
+  "ignore": ["templates"],
   "dependencies": {
-    "gemini-loader": "~0.3",
-    "gemini-fold": "~0",
-    "gemini-respond": "~0",
-    "gemini-touch": "~0.3",
-    "gemini-css": "~1",
-    "handlebars": "~4"
+    "gemini-loader": "0.5.x",
+    "gemini-fold": "0.3.x",
+    "gemini-respond": "0.3.x",
+    "gemini-touch": "0.5.x",
+    "gemini-css": "1.3.x",
+    "handlebars": "4.x"
   },
   "devDependencies": {
-    "requirejs": "~2",
-    "qunit": "~2"
+    "requirejs": "2.x",
+    "qunit": "2.x"
   }
 }

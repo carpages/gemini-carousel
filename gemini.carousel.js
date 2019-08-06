@@ -185,18 +185,14 @@ You can see this in the example
       P.currentItem = P.currentPage = 1;
 
       // Cache jQuery objects
-      P.$carousel = P.settings.container
-        ? P.$el.find( P.settings.container )
-        : P.$el;
+      P.$carousel = P.settings.container ? P.$el.find( P.settings.container ) : P.$el;
 
       P.$carouselLists = P.$el.find( '.carousel__list' );
       P.carouselList = P.$carouselLists[P.settings.indexList];
       P.$carouselList = G( P.carouselList );
       P.$currentPage = P.$el.find( '[data-goto="1"]' );
       P.$next = P.$el.find( '[data-goto="next"],[data-goto="++"]' );
-      P.$previous = P.$el.find(
-        '[data-goto="prev"],[data-goto="previous"],[data-goto="--"]'
-      );
+      P.$previous = P.$el.find( '[data-goto="prev"],[data-goto="previous"],[data-goto="--"]' );
 
       // Change next/prev button active states
       if ( !P._isNext()) {
@@ -409,10 +405,7 @@ You can see this in the example
 
       // Calculate the x offset in pixels
       var $item = P.$carouselList.children( 'li:nth-child(' + item + ')' );
-      var xOffset =
-        $item.offset().left -
-        P.$carouselList.offset().left +
-        P.carouselList.scrollLeft;
+      var xOffset = $item.offset().left - P.$carouselList.offset().left + P.carouselList.scrollLeft;
 
       // Whether there are more items to scroll to
       var THRESHOLD = -P.itemWidth * P._itemsPerPage;
@@ -521,50 +514,53 @@ You can see this in the example
           hold: false,
           tap: false
         })
-        .on( 'release dragleft dragright', function( ev ) {
-          switch ( ev.type ) {
-            case 'dragright':
-            case 'dragleft':
-              // stick to the finger
-              var pageOffset = ( P.currentPage - 1 ) * P.pageWidth;
-              var dragOffset = -ev.gesture.deltaX;
+        .bind( 'panend panleft panright', P._panHandler.bind( P ));
+    },
 
-              // slow down at the first and last pane
-              if (
-                ( P.currentPage === 1 && ev.gesture.direction === 'right' ) ||
-                ( P.currentPage === P.pageCount &&
-                  ev.gesture.direction === 'left' )
-              ) {
-                dragOffset *= 0.4;
-              }
+    _panHandler: function( ev ) {
+      var P = this;
 
-              P.$carouselLists.scrollLeft( pageOffset + dragOffset );
-              break;
+      switch ( ev.type ) {
+        case 'panright':
+        case 'panleft':
+          // stick to the finger
+          var pageOffset = ( P.currentPage - 1 ) * P.pageWidth;
+          var dragOffset = -ev.gesture.deltaX;
 
-            case 'release':
-              // check if their finger is moving fast
-              if ( ev.gesture.velocityX > 0.05 ) {
-                if ( ev.gesture.interimDirection === 'left' ) {
-                  P.next();
-                } else if ( ev.gesture.interimDirection === 'right' ) {
-                  P.previous();
-                }
-                // snap carousel base on positioning of page
-              } else {
-                // more then 50% moved, navigate
-                if ( Math.abs( ev.gesture.deltaX ) > P.pageWidth / 2 ) {
-                  if ( ev.gesture.direction === 'right' ) {
-                    P.previous();
-                  } else {
-                    P.next();
-                  }
-                } else {
-                  P.gotoPage( P.currentPage );
-                }
-              }
-              break;
+          // slow down at the first and last pane
+          if (
+            ( P.currentPage === 1 && ev.gesture.direction === 'right' ) ||
+            ( P.currentPage === P.pageCount && ev.gesture.direction === 'left' )
+          ) {
+            dragOffset *= 0.4;
           }
-        });
+
+          P.$carouselLists.scrollLeft( pageOffset + dragOffset );
+          break;
+
+        case 'panend':
+          // check if their finger is moving fast
+          if ( ev.gesture.velocityX > 0.05 ) {
+            if ( ev.gesture.interimDirection === 'left' ) {
+              P.next();
+            } else if ( ev.gesture.interimDirection === 'right' ) {
+              P.previous();
+            }
+            // snap carousel base on positioning of page
+          } else {
+            // more then 50% moved, navigate
+            if ( Math.abs( ev.gesture.deltaX ) > P.pageWidth / 2 ) {
+              if ( ev.gesture.direction === 'right' ) {
+                P.previous();
+              } else {
+                P.next();
+              }
+            } else {
+              P.gotoPage( P.currentPage );
+            }
+          }
+          break;
+      }
     }
   });
 
