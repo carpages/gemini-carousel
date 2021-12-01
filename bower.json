@@ -8,9 +8,6 @@
     "templates.js",
     "sass/carousel.scss"
   ],
-  "ignore": [
-    "templates"
-  ],
   "dependencies": {
     "gemini-loader": "0.3.x",
     "gemini-fold": "0.1.x",
